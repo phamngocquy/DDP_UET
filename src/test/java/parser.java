@@ -14,16 +14,25 @@ public class parser {
     @Test
     public void parserJavaFile()
     {
-        File file = new File("/home/jcia/IdeaProjects/DP-CORE-master/examples/Bridge Example/SamsungTV.java");
+        File file = new File("/home/jcia/IdeaProjects/DP-CORE-master/examples/AbstractFactoryExample/Test.java");
         try {
             CompilationUnit compilationUnit = JavaParser.parse(file);
-            System.out.println(compilationUnit.toString());
-            ClassOrInterfaceDeclaration type = (ClassOrInterfaceDeclaration) compilationUnit.getType(0);
-            NodeList<ClassOrInterfaceType> interfaceTypes = type.getImplementedTypes();
-            System.out.println(interfaceTypes);
 
-            NodeList<TypeParameter> interfaceTypes_1 = type.getTypeParameters();
-            System.out.println(interfaceTypes_1);
+            ClassOrInterfaceDeclaration type = (ClassOrInterfaceDeclaration) compilationUnit.getType(0);
+
+            ClassOrInterfaceDeclaration type_ = (ClassOrInterfaceDeclaration) compilationUnit.getType(1);
+
+            System.out.println(type);
+            System.out.println("////");
+            System.out.println(type_);
+
+//            NodeList<ClassOrInterfaceType> interfaceTypes = type.getExtendedTypes();
+//            System.out.println(interfaceTypes);
+//
+//
+//
+//            System.out.println("/////");
+//            System.out.println(type.getChildNodes().toString());
 
 
         } catch (FileNotFoundException e) {
