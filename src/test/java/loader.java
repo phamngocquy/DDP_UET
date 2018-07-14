@@ -3,6 +3,8 @@ import com.github.javaparser.ast.CompilationUnit;
 import com.github.javaparser.ast.NodeList;
 import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
 import com.github.javaparser.ast.type.ClassOrInterfaceType;
+import core.exception.D2pNotFoundException;
+import core.loader.LoaderImpl;
 import org.junit.Test;
 
 import java.io.File;
@@ -40,6 +42,11 @@ public class loader {
                 System.out.println("/////////////////////////////////");
             }
         }
-//        read file in folder
     }
+    @Test
+    public void testLoadProject() throws D2pNotFoundException {
+        LoaderImpl loader = new LoaderImpl();
+        loader.load("../DDP_UET/examples/Builder Example");
+    }
+
 }

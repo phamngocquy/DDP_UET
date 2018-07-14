@@ -1,6 +1,5 @@
 package core.depedency;
 
-import com.sun.javafx.binding.StringFormatter;
 import core.dom.Node;
 
 public class Dependency {
@@ -34,8 +33,7 @@ public class Dependency {
 
     @Override
     public String toString() {
-        String str = String.format("From: %s | To: %s | Type: %s",
-                from.getName(),to.getName(),String.valueOf(type));
-        return str;
+        return String.format("From: %s | To: %s | Type: %s",
+                from.getName(), to.getName(), String.valueOf(type));
     }
 }
