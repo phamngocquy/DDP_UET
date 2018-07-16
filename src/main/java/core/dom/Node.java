@@ -1,16 +1,20 @@
 package core.dom;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import core.depedency.Dependency;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Node {
+public class Node implements Serializable {
 
     private int id;
     private String name;
     private String absolutePath;
     private List<Node> children;
+
+    @JsonIgnore
     private Node paren;
     private Enum type;
 
@@ -54,11 +58,16 @@ public class Node {
         return id;
     }
 
+    @JsonIgnore
     public List<Node> getAllChild() {
+        return doGetAllChild(this);
+    }
+
+    private List<Node> doGetAllChild(Node parentNode) {
         List<Node> allChild = new ArrayList<Node>();
-        for (Node iNode : this.children) {
+        for (Node iNode : parentNode.getChild()) {
             allChild.add(iNode);
-            allChild.addAll(getAllChild());
+            allChild.addAll(doGetAllChild(iNode));
         }
         return allChild;
     }
@@ -68,6 +77,7 @@ public class Node {
         this.paren = node;
     }
 
+    @JsonIgnore
     public Node getParent() {
         return paren;
     }

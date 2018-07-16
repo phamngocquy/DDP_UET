@@ -46,7 +46,8 @@ public class loader {
     @Test
     public void testLoadProject() throws D2pNotFoundException {
         LoaderImpl loader = new LoaderImpl();
-        loader.load("../DDP_UET/examples/Builder Example");
+        loader.load("/home/haku/IdeaProjects/jcia-vt/src/main");
+//            loader.load("../DDP_UET/examples/Builder Example");
     }
 
 }
