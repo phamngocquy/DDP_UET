@@ -4,8 +4,6 @@ import com.github.javaparser.JavaParser;
 import com.github.javaparser.ast.CompilationUnit;
 import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
 import com.github.javaparser.ast.body.MethodDeclaration;
-import com.github.javaparser.ast.expr.ClassExpr;
-import com.github.javaparser.ast.type.ClassOrInterfaceType;
 import com.github.javaparser.ast.visitor.VoidVisitorAdapter;
 
 import java.io.FileInputStream;
@@ -18,12 +16,16 @@ public class VisitorAdapterTest {
 
         // parse it
         CompilationUnit cu = JavaParser.parse(in);
-        System.out.println(cu.getPrimaryTypeName());
-        System.out.println(cu);
-        System.out.println(cu.getType(0).getName());
+//        System.out.println(cu.getPrimaryTypeName());
+//        System.out.println(cu);
+//        System.out.println(cu.getType(0).getName());
 
         // visit and print the methods names
         ClassOrInterfaceDeclaration c = (ClassOrInterfaceDeclaration) cu.getType(0);
+        System.out.println("Class Name: " + c.getName());
+        System.out.println("Class Modifier: " + c.getModifiers());
+        System.out.println(c.getImplementedTypes());
+        System.out.println(c.getExtendedTypes());
         c.accept(new MethodVisitor(), null);
     }
 
@@ -38,14 +40,11 @@ public class VisitorAdapterTest {
             System.out.println(n.getDeclarationAsString());
             System.out.println(n.getDeclarationAsString(false, false));
             System.out.println(n.getModifiers());
+            System.out.println("//==================//");
             /*
                 done
              */
             super.visit(n, arg);
         }
-
-
-
-
     }
 }

@@ -1,5 +1,7 @@
 package core.Parser;
 
+import core.dom.Node;
+
 public interface IParser {
-    public void parse();
+    public void parse(Node node);
 }
