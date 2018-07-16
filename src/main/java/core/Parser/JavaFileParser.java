@@ -2,41 +2,36 @@ package core.Parser;
 
 import com.github.javaparser.JavaParser;
 import com.github.javaparser.ast.CompilationUnit;
-import com.github.javaparser.ast.Modifier;
-import com.github.javaparser.ast.NodeList;
-import com.github.javaparser.ast.body.*;
-import com.github.javaparser.ast.visitor.VoidVisitor;
+import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
+import com.github.javaparser.ast.body.FieldDeclaration;
+import com.github.javaparser.ast.body.MethodDeclaration;
+import com.github.javaparser.ast.expr.Name;
+import com.github.javaparser.ast.type.ClassOrInterfaceType;
 import com.github.javaparser.ast.visitor.VoidVisitorAdapter;
 import core.dom.Node;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.List;
 
 public class JavaFileParser implements IParser {
 
     public void parse(Node node) {
-        File file = new File(node.getAbsolutePath());
         try {
-            CompilationUnit compilationUnit = JavaParser.parse(file);
-            NodeList<TypeDeclaration<?>> list = compilationUnit.getTypes();
-            for (TypeDeclaration declaration : list) {
-                /*
-                    Get all properties of class
-                 */
-                /*
+            CompilationUnit compilationUnit = JavaParser.parse(new File(node.getAbsolutePath()));
+            compilationUnit.accept(new VoidVisitorAdapter<Void>() {
+                @Override
+                public void visit(ClassOrInterfaceDeclaration n, Void arg) {
 
-                 */
-                parsing(declaration);
-            }
-
+                    super.visit(n, arg);
+                }
+            }, null);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
     }
 
-    private void parsing(TypeDeclaration type) {
-        type.accept(new VoidVisitorAdapter<Void>() {
+    private void javaClassParse(ClassOrInterfaceDeclaration javaClassNode) {
+        javaClassNode.accept(new VoidVisitorAdapter<Void>() {
             @Override
             public void visit(MethodDeclaration n, Void arg) {
                 super.visit(n, arg);
@@ -46,8 +41,8 @@ public class JavaFileParser implements IParser {
             public void visit(FieldDeclaration n, Void arg) {
                 super.visit(n, arg);
             }
-2
         }, null);
     }
+
 
 }

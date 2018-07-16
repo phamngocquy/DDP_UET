@@ -41,8 +41,8 @@ public class LoaderImpl implements ILoader {
 
     private void buildPrimitiveTree() {
         buildSubTree(projectNode);
-        System.out.println(projectNode.getAllChild().size());
-        System.out.println(JsonHelper.getInstance().getJson(projectNode));
+//        System.out.println(projectNode.getAllChild().size());
+//        System.out.println(JsonHelper.getInstance().getJson(projectNode));
 
     }
 
