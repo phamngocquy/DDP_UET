@@ -13,9 +13,5 @@ public class JavaMethodNode extends JavaClassNode {
     public JavaMethodNode() {
     }
 
-    public JavaMethodNode(String name, String absolutePath, Enum modifier, String returnType, List<JavaParameter> parameterList) {
-        super(name, absolutePath, modifier);
-        this.returnType = returnType;
-        this.parameterList = parameterList;
-    }
+
 }

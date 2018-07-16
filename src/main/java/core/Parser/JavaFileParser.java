@@ -5,22 +5,34 @@ import com.github.javaparser.ast.CompilationUnit;
 import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
 import com.github.javaparser.ast.body.FieldDeclaration;
 import com.github.javaparser.ast.body.MethodDeclaration;
-import com.github.javaparser.ast.expr.Name;
-import com.github.javaparser.ast.type.ClassOrInterfaceType;
 import com.github.javaparser.ast.visitor.VoidVisitorAdapter;
+import core.dom.JavaClassNode;
+import core.dom.JavaFileNode;
 import core.dom.Node;
+import core.util.FileHelper;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 
 public class JavaFileParser implements IParser {
 
-    public void parse(Node node) {
+    private JavaFileNode javaFileNode;
+
+    public void parse(final Node rootNode) {
         try {
-            CompilationUnit compilationUnit = JavaParser.parse(new File(node.getAbsolutePath()));
+            this.javaFileNode = (JavaFileNode) rootNode;
+
+            CompilationUnit compilationUnit = JavaParser.parse(new File(rootNode.getAbsolutePath()));
             compilationUnit.accept(new VoidVisitorAdapter<Void>() {
                 @Override
                 public void visit(ClassOrInterfaceDeclaration n, Void arg) {
+
+                    JavaClassNode classNode = new JavaClassNode();
+                    classNode.setModifiers(n.getModifiers());
+                    classNode.setName(n.getNameAsString());
+                    classNode.setAbsolutePath(FileHelper.getAbsolutePath(rootNode.getAbsolutePath(),
+                            n.getNameAsString()));
+
 
                     super.visit(n, arg);
                 }

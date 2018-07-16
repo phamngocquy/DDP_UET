@@ -1,21 +1,39 @@
 package core.dom;
 
+
+import com.github.javaparser.ast.Modifier;
+
+import java.util.EnumSet;
+
 public class JavaClassNode extends Node {
-    private Enum modifier;
+    private EnumSet<Modifier> modifiers;
+    private Boolean isInterface;
+    private Boolean isAbstract;
 
     public JavaClassNode() {
     }
 
-    public JavaClassNode(String name, String absolutePath, Enum modifier) {
-        super(name, absolutePath);
-        this.modifier = modifier;
+    public EnumSet<Modifier> getModifiers() {
+        return modifiers;
     }
 
-    public Enum getModifier() {
-        return modifier;
+    public void setModifiers(EnumSet<Modifier> modifiers) {
+        this.modifiers = modifiers;
     }
 
-    public void setModifier(Enum modifier) {
-        this.modifier = modifier;
+    public Boolean getInterface() {
+        return isInterface;
+    }
+
+    public void setInterface(Boolean anInterface) {
+        isInterface = anInterface;
+    }
+
+    public Boolean getAbstract() {
+        return isAbstract;
+    }
+
+    public void setAbstract(Boolean anAbstract) {
+        isAbstract = anAbstract;
     }
 }

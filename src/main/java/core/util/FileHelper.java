@@ -46,4 +46,8 @@ public class FileHelper {
         }
         return FileType.UNKNOWN;
     }
+
+    public static String getAbsolutePath(String parentAbsolutePath, String childName) {
+        return parentAbsolutePath + File.separator + childName;
+    }
 }

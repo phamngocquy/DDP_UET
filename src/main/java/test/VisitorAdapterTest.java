@@ -21,12 +21,18 @@ public class VisitorAdapterTest {
 //        System.out.println(cu.getType(0).getName());
 
         // visit and print the methods names
+
         ClassOrInterfaceDeclaration c = (ClassOrInterfaceDeclaration) cu.getType(0);
-        System.out.println("Class Name: " + c.getName());
-        System.out.println("Class Modifier: " + c.getModifiers());
-        System.out.println(c.getImplementedTypes());
-        System.out.println(c.getExtendedTypes());
-        c.accept(new MethodVisitor(), null);
+        System.out.println(c);
+        System.out.println(c.isInterface());
+        System.out.println(c.isAbstract());
+
+//        System.out.println(c.getExtendedTypes());
+//        System.out.println("Class Name: " + c.getName());
+//        System.out.println("Class Modifier: " + c.getModifiers());
+//        System.out.println(c.getImplementedTypes());
+//        System.out.println(c.getExtendedTypes());
+//        c.accept(new MethodVisitor(), null);
     }
 
     private static class MethodVisitor extends VoidVisitorAdapter<Void> {

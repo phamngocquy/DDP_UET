@@ -2,6 +2,7 @@ package core.loader;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import core.Parser.JavaFileParser;
 import core.constant.FileType;
 import core.dom.JavaFileNode;
 import core.dom.Node;
@@ -15,6 +16,12 @@ import java.util.ArrayList;
 
 public class LoaderImpl implements ILoader {
     private Node projectNode;
+    private JavaFileParser javaFileParser;
+
+
+    public LoaderImpl() {
+        this.javaFileParser = new JavaFileParser();
+    }
 
     public void load(String projectPath) throws D2pNotFoundException {
         String absolutePath = FileHelper.getAbsolutePath(projectPath);
@@ -78,7 +85,7 @@ public class LoaderImpl implements ILoader {
                     node.setParent(parentNode);
 
                     //parser java file
-
+                    javaFileParser.parse(node);
                 }
             }
         }
