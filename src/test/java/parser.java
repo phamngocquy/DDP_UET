@@ -14,27 +14,12 @@ public class parser {
     @Test
     public void parserJavaFile()
     {
-        File file = new File("/home/jcia/IdeaProjects/DP-CORE-master/examples/AbstractFactoryExample/Test.java");
+        File file = new File("/home/haku/IdeaProjects/DDP_UET/examples/Builder Example/ItalianMealBuilder.java");
         try {
             CompilationUnit compilationUnit = JavaParser.parse(file);
 
             ClassOrInterfaceDeclaration type = (ClassOrInterfaceDeclaration) compilationUnit.getType(0);
-
-            ClassOrInterfaceDeclaration type_ = (ClassOrInterfaceDeclaration) compilationUnit.getType(1);
-
             System.out.println(type);
-            System.out.println("////");
-            System.out.println(type_);
-
-//            NodeList<ClassOrInterfaceType> interfaceTypes = type.getExtendedTypes();
-//            System.out.println(interfaceTypes);
-//
-//
-//
-//            System.out.println("/////");
-//            System.out.println(type.getChildNodes().toString());
-
-
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }

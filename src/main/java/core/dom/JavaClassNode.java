@@ -3,8 +3,7 @@ package core.dom;
 public class JavaClassNode extends Node {
     private Enum modifier;
 
-    public JavaClassNode(Enum modifier) {
-        this.modifier = modifier;
+    public JavaClassNode() {
     }
 
     public JavaClassNode(String name, String absolutePath, Enum modifier) {
