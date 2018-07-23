@@ -14,7 +14,7 @@ public class MealDirector {
 		mealBuilder.buildSide();
 	}
 
-	public Meal getMeal() {
+	public Meal getMeal(String a) {
 		return mealBuilder.getMeal();
 	}
 

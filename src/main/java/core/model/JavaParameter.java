@@ -1,14 +1,32 @@
 package core.model;
 
-public class JavaParameter {
+import java.io.Serializable;
+
+public class JavaParameter implements Serializable {
     private String name;
-    private Enum value_type;
+    private String valueType;
 
     public JavaParameter() {
     }
 
-    public JavaParameter(String name, Enum value_type) {
+    public JavaParameter(String name, String valueType) {
         this.name = name;
-        this.value_type = value_type;
+        this.valueType = valueType;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getValueType() {
+        return valueType;
+    }
+
+    public void setValueType(String valueType) {
+        this.valueType = valueType;
     }
 }

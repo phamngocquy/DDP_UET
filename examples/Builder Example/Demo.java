@@ -16,5 +16,4 @@ public class Demo {
 		meal = mealDirector.getMeal();
 		System.out.println("meal is: " + meal);
 	}
-
 }

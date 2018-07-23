@@ -1,6 +1,6 @@
 package core.constant;
 
-public enum  TypeClass {
+public enum JavaClassType {
     C, /*class*/
     I,  /*interface*/
     A,  /*abstract class*/

@@ -11,6 +11,7 @@ public class JavaClassNode extends Node {
     private Boolean isAbstract;
 
     public JavaClassNode() {
+        super.nodeType = "JavaClassNode";
     }
 
     public EnumSet<Modifier> getModifiers() {

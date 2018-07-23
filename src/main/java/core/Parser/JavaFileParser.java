@@ -5,20 +5,24 @@ import com.github.javaparser.ast.CompilationUnit;
 import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
 import com.github.javaparser.ast.body.FieldDeclaration;
 import com.github.javaparser.ast.body.MethodDeclaration;
+import com.github.javaparser.ast.body.Parameter;
 import com.github.javaparser.ast.visitor.VoidVisitorAdapter;
-import core.dom.JavaClassNode;
-import core.dom.JavaFileNode;
-import core.dom.Node;
+import core.constant.JavaChildrenType;
+import core.constant.JavaClassType;
+import core.dom.*;
+import core.model.JavaParameter;
 import core.util.FileHelper;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class JavaFileParser implements IParser {
 
     private JavaFileNode javaFileNode;
 
-    public void parse(final Node rootNode) {
+    public void parse(Node rootNode) {
         try {
             this.javaFileNode = (JavaFileNode) rootNode;
 
@@ -30,10 +34,24 @@ public class JavaFileParser implements IParser {
                     JavaClassNode classNode = new JavaClassNode();
                     classNode.setModifiers(n.getModifiers());
                     classNode.setName(n.getNameAsString());
-                    classNode.setAbsolutePath(FileHelper.getAbsolutePath(rootNode.getAbsolutePath(),
+                    classNode.setAbsolutePath(FileHelper.getAbsolutePath(javaFileNode.getAbsolutePath(),
                             n.getNameAsString()));
+                    classNode.setAbstract(n.isAbstract());
+                    classNode.setInterface(n.isInterface());
 
+                    /*
+                        Java Class Type
+                     */
+                    if (n.isInterface()) classNode.setType(JavaClassType.I);
+                    else if (n.isAbstract()) classNode.setType(JavaClassType.A);
+                    else if (n.isGeneric()) classNode.setType(JavaClassType.T);
+                    else classNode.setType(JavaClassType.C);
 
+                    classNode.setParent(javaFileNode);
+                    javaFileNode.addChild(classNode);
+
+                    // parse class java
+                    javaClassParse(n, classNode);
                     super.visit(n, arg);
                 }
             }, null);
@@ -42,19 +60,44 @@ public class JavaFileParser implements IParser {
         }
     }
 
-    private void javaClassParse(ClassOrInterfaceDeclaration javaClassNode) {
+    private void javaClassParse(ClassOrInterfaceDeclaration javaClassNode, final JavaClassNode classNode) {
         javaClassNode.accept(new VoidVisitorAdapter<Void>() {
             @Override
             public void visit(MethodDeclaration n, Void arg) {
+                JavaMethodNode node = new JavaMethodNode();
+                node.setModifiers(n.getModifiers());
+                node.setName(n.getNameAsString());
+                node.setAbsolutePath(FileHelper.getAbsolutePath(classNode.getAbsolutePath(), node.getName()));
+                node.setReturnType(n.getType().toString());
+                node.setType(JavaChildrenType.JAVA_METHOD);
+                parseParameter(node, n);
+
+                classNode.addChild(node);
+                node.setParent(classNode);
                 super.visit(n, arg);
             }
 
             @Override
             public void visit(FieldDeclaration n, Void arg) {
+                JavaFieldNode node = new JavaFieldNode();
+                node.setModifiers(n.getModifiers());
+                node.setName(n.getVariable(0).toString());
+                node.setValue_type(n.getCommonType().toString());
+                node.setAbsolutePath(FileHelper.getAbsolutePath(classNode.getAbsolutePath(), node.getName()));
+                node.setType(JavaChildrenType.JAVA_PARAMETER);
+                classNode.addChild(node);
+                node.setParent(classNode);
                 super.visit(n, arg);
             }
         }, null);
     }
 
+    private void parseParameter(JavaMethodNode javaMethodNode, MethodDeclaration n) {
+        List<JavaParameter> parameters = new ArrayList<JavaParameter>();
+        for (Parameter p : n.getParameters()) {
+            parameters.add(new JavaParameter(p.getNameAsString(), p.getTypeAsString()));
+        }
+        javaMethodNode.setParameterList(parameters);
+    }
 
 }

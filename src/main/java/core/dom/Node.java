@@ -13,7 +13,7 @@ public class Node implements Serializable {
     private String name;
     private String absolutePath;
     private List<Node> children;
-
+    protected String nodeType;
     @JsonIgnore
     private Node paren;
     private Enum type;
@@ -24,6 +24,7 @@ public class Node implements Serializable {
     public Node() {
         this.children = new ArrayList<Node>();
         this.dependencies = new ArrayList<Dependency>();
+        nodeType = "Node";
     }
 
     public Node(String name, String absolutePath) {
@@ -108,5 +109,21 @@ public class Node implements Serializable {
 
     public void setType(Enum type) {
         this.type = type;
+    }
+
+    public String getNodeType() {
+        return nodeType;
+    }
+
+    public void setNodeType(String nodeType) {
+        this.nodeType = nodeType;
+    }
+
+    public List<Node> getChildren() {
+        return children;
+    }
+
+    public void setChildren(List<Node> children) {
+        this.children = children;
     }
 }
