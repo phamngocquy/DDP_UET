@@ -3,6 +3,7 @@ import com.github.javaparser.ast.CompilationUnit;
 import com.github.javaparser.ast.NodeList;
 import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
 import com.github.javaparser.ast.type.ClassOrInterfaceType;
+import core.analyzer.JavaCoreAnalyzer;
 import core.dom.Node;
 import core.exception.D2pNotFoundException;
 import core.helper.Helper;
@@ -51,7 +52,11 @@ public class loader {
     public void testLoadProject() throws D2pNotFoundException {
         LoaderImpl loader = new LoaderImpl();
         loader.load("C:\\Users\\Haku\\IdeaProjects\\DDP_UET\\examples\\Bridge Example");
-        System.out.println(JsonHelper.getInstance().getJson(loader.getProjectNode()));
+        Node projectNode = loader.getProjectNode();
+
+        JavaCoreAnalyzer javaCoreAnalyzer = new JavaCoreAnalyzer();
+        javaCoreAnalyzer.doAnalyzer(projectNode);
+
 //        List<Node> nodeList = Search.getAllJavaClassNode(loader.getProjectNode());
 //        Node node = new Node();
 //        node.setChild(nodeList);

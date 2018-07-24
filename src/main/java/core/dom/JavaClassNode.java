@@ -13,6 +13,7 @@ public class JavaClassNode extends Node {
     private Boolean isInterface;
     private Boolean isAbstract;
     private List<Polymorphism> polymorphismList;
+    private Enum type;
 
 
     public JavaClassNode() {
@@ -49,5 +50,13 @@ public class JavaClassNode extends Node {
 
     public void setPolymorphismList(List<Polymorphism> polymorphismList) {
         this.polymorphismList = polymorphismList;
+    }
+
+    public Enum getType() {
+        return type;
+    }
+
+    public void setType(Enum type) {
+        this.type = type;
     }
 }

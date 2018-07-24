@@ -43,7 +43,7 @@ public class LoaderImpl implements ILoader {
         projectNode = new Node();
         projectNode.setAbsolutePath(projectPath);
         projectNode.setName(file.getName());
-        projectNode.setType(FileType.DIRECTORY);
+//        projectNode.setType(FileType.DIRECTORY);
     }
 
     private void buildPrimitiveTree() {
@@ -60,18 +60,18 @@ public class LoaderImpl implements ILoader {
                     node = new Node();
                     node.setName(file.getName());
                     node.setAbsolutePath(absolutePath);
-                    node.setType(FileType.DIRECTORY);
+//                    node.setType(FileType.DIRECTORY);
                     buildSubTree(node);
                 } else if (file.exists()) {
                     FileType fileType = FileHelper.getFileType(absolutePath);
                     switch (fileType) {
                         case JAVAFILE:
                             node = new JavaFileNode();
-                            node.setType(FileType.JAVAFILE);
+//                            node.setType(FileType.JAVAFILE);
                             break;
                         default:
                             node = new UnknownFileNode();
-                            node.setType(FileType.UNKNOWN);
+//                            node.setType(FileType.UNKNOWN);
                             break;
                     }
                 }

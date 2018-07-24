@@ -13,7 +13,7 @@ public class Node implements Serializable {
     private String name;
     private String absolutePath;
     String nodeType;
-    private Enum type;
+//    private Enum type;
 
     @JsonIgnore
     private Node paren;
@@ -109,13 +109,13 @@ public class Node implements Serializable {
         this.absolutePath = absolutePath;
     }
 
-    public Enum getType() {
-        return type;
-    }
+//    public Enum getType() {
+//        return type;
+//    }
 
-    public void setType(Enum type) {
-        this.type = type;
-    }
+//    public void setType(Enum type) {
+//        this.type = type;
+//    }
 
     public String getNodeType() {
         return nodeType;
