@@ -1,9 +1,7 @@
 package core.dom;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.github.javaparser.ast.Modifier;
-import com.github.javaparser.ast.NodeList;
-import com.github.javaparser.ast.body.Parameter;
+import core.constant.JavaNodeType;
 import core.model.JavaParameter;
 
 import java.util.ArrayList;
@@ -20,7 +18,7 @@ public class JavaMethodNode extends Node {
 
     public JavaMethodNode() {
         parameterList = new ArrayList<JavaParameter>();
-        this.nodeType = "JavaMethodNode";
+        this.nodeType = JavaNodeType.JAVA_METHOD_NODE;
     }
 
     public String getReturnType() {

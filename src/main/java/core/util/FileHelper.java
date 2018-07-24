@@ -42,7 +42,7 @@ public class FileHelper {
 
     public static FileType getFileType(String filePath) {
         if (filePath.endsWith(JAVA_EXTENSION)) {
-            return FileType.JAVA_FILE;
+            return FileType.JAVAFILE;
         }
         return FileType.UNKNOWN;
     }

@@ -1,6 +1,7 @@
 package core.dom;
 
 import com.github.javaparser.ast.Modifier;
+import core.constant.JavaNodeType;
 
 import java.util.EnumSet;
 
@@ -9,7 +10,7 @@ public class JavaFieldNode extends Node {
     private EnumSet<Modifier> modifiers;
 
     public JavaFieldNode() {
-        super.nodeType = "JavaFieldNode";
+        super.nodeType = JavaNodeType.JAVA_FIELD_NODE;
     }
 
     public String getValueType() {

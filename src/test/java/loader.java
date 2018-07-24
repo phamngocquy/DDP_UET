@@ -3,8 +3,12 @@ import com.github.javaparser.ast.CompilationUnit;
 import com.github.javaparser.ast.NodeList;
 import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
 import com.github.javaparser.ast.type.ClassOrInterfaceType;
+import core.dom.Node;
 import core.exception.D2pNotFoundException;
+import core.helper.Helper;
+import core.helper.Search;
 import core.loader.LoaderImpl;
+import core.util.JsonHelper;
 import org.junit.Test;
 
 import java.io.File;
@@ -22,9 +26,8 @@ public class loader {
         File[] files = folder.listFiles();
         List<CompilationUnit> unitList = new ArrayList<CompilationUnit>();
 
-        for (File file : files){
-            if(file.isFile())
-            {
+        for (File file : files) {
+            if (file.isFile()) {
                 CompilationUnit compilationUnit = JavaParser.parse(new File(file.getAbsolutePath()));
                 unitList.add(compilationUnit);
 
@@ -34,20 +37,27 @@ public class loader {
 
                 NodeList<ClassOrInterfaceType> listExtends = type.getExtendedTypes();
 
-                System.out.println("aaa: "+compilationUnit.getPrimaryTypeName());
-                System.out.println("class: "+ type.getNameAsString());
-                System.out.println("File path: " +file.getAbsolutePath());
-                System.out.println("Interface class: "+ listInterface.toString());
+                System.out.println("aaa: " + compilationUnit.getPrimaryTypeName());
+                System.out.println("class: " + type.getNameAsString());
+                System.out.println("File path: " + file.getAbsolutePath());
+                System.out.println("Interface class: " + listInterface.toString());
                 System.out.println("Extends class: " + listExtends.toString());
                 System.out.println("/////////////////////////////////");
             }
         }
     }
+
     @Test
     public void testLoadProject() throws D2pNotFoundException {
         LoaderImpl loader = new LoaderImpl();
-        loader.load("C:\\Users\\Haku\\IdeaProjects\\DDP_UET\\examples\\Builder Example");
-//            loader.load("../DDP_UET/examples/Builder Example");
+        loader.load("C:\\Users\\Haku\\IdeaProjects\\DDP_UET\\examples\\Bridge Example");
+        System.out.println(JsonHelper.getInstance().getJson(loader.getProjectNode()));
+//        List<Node> nodeList = Search.getAllJavaClassNode(loader.getProjectNode());
+//        Node node = new Node();
+//        node.setChild(nodeList);
+//        System.out.println(JsonHelper.getInstance().getJson(node));
+
+
     }
 
 }

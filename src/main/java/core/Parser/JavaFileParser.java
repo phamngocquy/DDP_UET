@@ -6,11 +6,14 @@ import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
 import com.github.javaparser.ast.body.FieldDeclaration;
 import com.github.javaparser.ast.body.MethodDeclaration;
 import com.github.javaparser.ast.body.Parameter;
+import com.github.javaparser.ast.type.ClassOrInterfaceType;
 import com.github.javaparser.ast.visitor.VoidVisitorAdapter;
 import core.constant.JavaChildrenType;
 import core.constant.JavaClassType;
+import core.constant.JavaPolymorphismType;
 import core.dom.*;
 import core.model.JavaParameter;
+import core.model.Polymorphism;
 import core.util.FileHelper;
 
 import java.io.File;
@@ -38,6 +41,7 @@ public class JavaFileParser implements IParser {
                             n.getNameAsString()));
                     classNode.setAbstract(n.isAbstract());
                     classNode.setInterface(n.isInterface());
+                    classNode.setPolymorphismList(getPolymorphismProperties(n));
 
                     /*
                         Java Class Type
@@ -50,7 +54,7 @@ public class JavaFileParser implements IParser {
                     classNode.setParent(javaFileNode);
                     javaFileNode.addChild(classNode);
 
-                    // parse class java
+                    // parser child  class java
                     javaClassParse(n, classNode);
                     super.visit(n, arg);
                 }
@@ -69,7 +73,7 @@ public class JavaFileParser implements IParser {
                 node.setName(n.getNameAsString());
                 node.setAbsolutePath(FileHelper.getAbsolutePath(classNode.getAbsolutePath(), node.getName()));
                 node.setReturnType(n.getType().toString());
-                node.setType(JavaChildrenType.JAVA_METHOD);
+                node.setType(JavaChildrenType.JAVAMETHOD);
                 parseParameter(node, n);
 
                 classNode.addChild(node);
@@ -84,7 +88,7 @@ public class JavaFileParser implements IParser {
                 node.setName(n.getVariable(0).toString());
                 node.setValue_type(n.getCommonType().toString());
                 node.setAbsolutePath(FileHelper.getAbsolutePath(classNode.getAbsolutePath(), node.getName()));
-                node.setType(JavaChildrenType.JAVA_PARAMETER);
+                node.setType(JavaChildrenType.JAVAPARAMETER);
                 classNode.addChild(node);
                 node.setParent(classNode);
                 super.visit(n, arg);
@@ -100,4 +104,17 @@ public class JavaFileParser implements IParser {
         javaMethodNode.setParameterList(parameters);
     }
 
+    private static List<Polymorphism> getPolymorphismProperties(ClassOrInterfaceDeclaration declaration) {
+        List<Polymorphism> result = new ArrayList<Polymorphism>();
+
+        for (ClassOrInterfaceType type : declaration.getImplementedTypes()) {
+            result.add(new Polymorphism(type.getNameAsString(), JavaPolymorphismType.IMPLEMENTS));
+        }
+
+        for (ClassOrInterfaceType type : declaration.getExtendedTypes()) {
+            result.add(new Polymorphism(type.getNameAsString(), JavaPolymorphismType.EXTENDS));
+        }
+
+        return result;
+    }
 }

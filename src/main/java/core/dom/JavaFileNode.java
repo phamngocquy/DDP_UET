@@ -1,12 +1,9 @@
 package core.dom;
 
+import core.constant.JavaNodeType;
+
 public class JavaFileNode extends Node {
     public JavaFileNode() {
-    }
-
-    public JavaFileNode(String name, String absolutePath) {
-        super(name, absolutePath);
-        super.nodeType = "JavaFileNode";
-
+        super.nodeType = JavaNodeType.JAVA_FILE_NODE;
     }
 }

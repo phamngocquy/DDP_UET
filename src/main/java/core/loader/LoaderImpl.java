@@ -48,9 +48,6 @@ public class LoaderImpl implements ILoader {
 
     private void buildPrimitiveTree() {
         buildSubTree(projectNode);
-//        System.out.println(projectNode.getAllChild().size());
-        System.out.println(JsonHelper.getInstance().getJson(projectNode));
-
     }
 
     private void buildSubTree(Node parentNode) {
@@ -68,9 +65,9 @@ public class LoaderImpl implements ILoader {
                 } else if (file.exists()) {
                     FileType fileType = FileHelper.getFileType(absolutePath);
                     switch (fileType) {
-                        case JAVA_FILE:
+                        case JAVAFILE:
                             node = new JavaFileNode();
-                            node.setType(FileType.JAVA_FILE);
+                            node.setType(FileType.JAVAFILE);
                             break;
                         default:
                             node = new UnknownFileNode();
@@ -89,5 +86,9 @@ public class LoaderImpl implements ILoader {
                 }
             }
         }
+    }
+
+    public Node getProjectNode() {
+        return projectNode;
     }
 }
