@@ -73,9 +73,9 @@ public class JavaFileParser implements IParser {
                 node.setName(n.getNameAsString());
                 node.setAbsolutePath(FileHelper.getAbsolutePath(classNode.getAbsolutePath(), node.getName()));
                 node.setReturnType(n.getType().toString());
-//                node.setType(JavaChildrenType.JAVAMETHOD);
                 parseParameter(node, n);
 
+                System.out.println("Body Method: " + n.getBody().toString() );
                 classNode.addChild(node);
                 node.setParent(classNode);
                 super.visit(n, arg);
@@ -88,7 +88,6 @@ public class JavaFileParser implements IParser {
                 node.setName(n.getVariable(0).toString());
                 node.setValue_type(n.getCommonType().toString());
                 node.setAbsolutePath(FileHelper.getAbsolutePath(classNode.getAbsolutePath(), node.getName()));
-//                node.setType(JavaChildrenType.JAVAPARAMETER);
                 classNode.addChild(node);
                 node.setParent(classNode);
                 super.visit(n, arg);

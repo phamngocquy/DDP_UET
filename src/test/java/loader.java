@@ -51,7 +51,8 @@ public class loader {
     @Test
     public void testLoadProject() throws D2pNotFoundException {
         LoaderImpl loader = new LoaderImpl();
-        loader.load("C:\\Users\\Haku\\IdeaProjects\\DDP_UET\\examples\\Bridge Example");
+//        loader.load("C:\\Users\\Haku\\IdeaProjects\\DDP_UET\\examples\\Bridge Example");
+        loader.load("C:\\Users\\Haku\\IdeaProjects\\jcia-vt\\src\\main\\java\\com\\fit");
         Node projectNode = loader.getProjectNode();
 
         JavaCoreAnalyzer javaCoreAnalyzer = new JavaCoreAnalyzer();

@@ -5,6 +5,7 @@ import com.github.javaparser.ast.Modifier;
 import core.constant.JavaNodeType;
 import core.model.Polymorphism;
 
+import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.List;
 
@@ -18,6 +19,7 @@ public class JavaClassNode extends Node {
 
     public JavaClassNode() {
         super.nodeType = JavaNodeType.JAVA_CLASS_NODE;
+        this.polymorphismList = new ArrayList<Polymorphism>();
     }
 
     public EnumSet<Modifier> getModifiers() {

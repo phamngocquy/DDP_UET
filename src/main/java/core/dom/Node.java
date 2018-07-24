@@ -13,13 +13,13 @@ public class Node implements Serializable {
     private String name;
     private String absolutePath;
     String nodeType;
-//    private Enum type;
 
     @JsonIgnore
     private Node paren;
+    @JsonIgnore
+    private List<Dependency> dependencies;
     private List<Node> children;
 
-    private List<Dependency> dependencies;
 
     public Node() {
         this.children = new ArrayList<Node>();

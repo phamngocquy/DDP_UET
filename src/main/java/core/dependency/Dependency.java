@@ -1,5 +1,6 @@
 package core.dependency;
 
+import core.dom.JavaClassNode;
 import core.dom.Node;
 
 public class Dependency {
@@ -7,9 +8,12 @@ public class Dependency {
     private Node to;
     private Enum type;
 
+    public Dependency() {
+    }
 
-    public void addDependency(Node caller, Node callee) {
+    public void addDependency(Node caller, Node callee, Enum type) {
         /**/
+        this.type = type;
         this.from = caller;
         this.to = callee;
 

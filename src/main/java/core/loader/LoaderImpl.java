@@ -60,18 +60,15 @@ public class LoaderImpl implements ILoader {
                     node = new Node();
                     node.setName(file.getName());
                     node.setAbsolutePath(absolutePath);
-//                    node.setType(FileType.DIRECTORY);
                     buildSubTree(node);
                 } else if (file.exists()) {
                     FileType fileType = FileHelper.getFileType(absolutePath);
                     switch (fileType) {
                         case JAVAFILE:
                             node = new JavaFileNode();
-//                            node.setType(FileType.JAVAFILE);
                             break;
                         default:
                             node = new UnknownFileNode();
-//                            node.setType(FileType.UNKNOWN);
                             break;
                     }
                 }
@@ -82,7 +79,9 @@ public class LoaderImpl implements ILoader {
                     node.setParent(parentNode);
 
                     //parser java file
-                    javaFileParser.parse(node);
+                    if (node instanceof JavaFileNode) {
+                        javaFileParser.parse(node);
+                    }
                 }
             }
         }
