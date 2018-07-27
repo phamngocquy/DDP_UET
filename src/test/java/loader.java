@@ -54,16 +54,15 @@ public class loader {
 //        loader.load("C:\\Users\\Haku\\IdeaProjects\\DDP_UET\\examples\\Bridge Example");
         loader.load("C:\\Users\\Haku\\IdeaProjects\\jcia-vt\\src\\main\\java\\com\\fit");
         Node projectNode = loader.getProjectNode();
+        System.out.println(JsonHelper.getInstance().getJson(projectNode));
 
-        JavaCoreAnalyzer javaCoreAnalyzer = new JavaCoreAnalyzer();
-        javaCoreAnalyzer.doAnalyzer(projectNode);
+//        JavaCoreAnalyzer javaCoreAnalyzer = new JavaCoreAnalyzer();
+//        javaCoreAnalyzer.doAnalyzer(projectNode);
 
 //        List<Node> nodeList = Search.getAllJavaClassNode(loader.getProjectNode());
 //        Node node = new Node();
 //        node.setChild(nodeList);
 //        System.out.println(JsonHelper.getInstance().getJson(node));
-
-
     }
 
 }

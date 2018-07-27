@@ -12,7 +12,9 @@ public enum JavaTypeDependencies {
 
 
     MC, /*class A call a method of class B */
+
     ML, /*class A has a method that defines a local variable with the type of class B*/
+
 
 
     M, /* class A has related with its method of class B*/
@@ -21,5 +23,6 @@ public enum JavaTypeDependencies {
 
 
     C, /* class A create object of class B */
+
     O, /* class A overrides of class B*/
 }

@@ -2,6 +2,7 @@ package core.helper;
 
 import core.constant.JavaNodeType;
 import core.dom.Node;
+import core.helper.condition.ICondition;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,8 +14,20 @@ public class Search {
         return nodeList;
     }
 
+    public static List<Node> getAllJavaMethodNode(Node classNode, ICondition iCondition) {
+        List<Node> nodeList = new ArrayList<>();
+        if (iCondition.isSatisfiable(classNode)) {
+            for (Node iNode : classNode.getChildren()) {
+                if (iNode.getNodeType().equals(JavaNodeType.JAVA_METHOD_NODE)) {
+                    nodeList.add(iNode);
+                }
+            }
+        }
+        return nodeList;
+    }
+
     private static List<Node> doGetAllJavaClassNode(Node rootNode) {
-        List<Node> nodeList = new ArrayList<Node>();
+        List<Node> nodeList = new ArrayList<>();
         if (rootNode.getNodeType().equals(JavaNodeType.JAVA_CLASS_NODE)) {
             nodeList.add(rootNode);
         } else {
@@ -43,5 +56,6 @@ public class Search {
         }
         return nodeList;
     }
+
 
 }

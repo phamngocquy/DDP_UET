@@ -43,9 +43,7 @@ public class JavaFileParser implements IParser {
                     classNode.setInterface(n.isInterface());
                     classNode.setPolymorphismList(getPolymorphismProperties(n));
 
-                    /*
-                        Java Class Type
-                     */
+                    // Java Class Type
                     if (n.isInterface()) classNode.setType(JavaClassType.I);
                     else if (n.isAbstract()) classNode.setType(JavaClassType.A);
                     else if (n.isGeneric()) classNode.setType(JavaClassType.T);
@@ -73,9 +71,8 @@ public class JavaFileParser implements IParser {
                 node.setName(n.getNameAsString());
                 node.setAbsolutePath(FileHelper.getAbsolutePath(classNode.getAbsolutePath(), node.getName()));
                 node.setReturnType(n.getType().toString());
+                node.setBody(n.getBody().toString());
                 parseParameter(node, n);
-
-                System.out.println("Body Method: " + n.getBody().toString() );
                 classNode.addChild(node);
                 node.setParent(classNode);
                 super.visit(n, arg);
@@ -96,7 +93,7 @@ public class JavaFileParser implements IParser {
     }
 
     private void parseParameter(JavaMethodNode javaMethodNode, MethodDeclaration n) {
-        List<JavaParameter> parameters = new ArrayList<JavaParameter>();
+        List<JavaParameter> parameters = new ArrayList<>();
         for (Parameter p : n.getParameters()) {
             parameters.add(new JavaParameter(p.getNameAsString(), p.getTypeAsString()));
         }
@@ -104,12 +101,10 @@ public class JavaFileParser implements IParser {
     }
 
     private static List<Polymorphism> getPolymorphismProperties(ClassOrInterfaceDeclaration declaration) {
-        List<Polymorphism> result = new ArrayList<Polymorphism>();
-
+        List<Polymorphism> result = new ArrayList<>();
         for (ClassOrInterfaceType type : declaration.getImplementedTypes()) {
             result.add(new Polymorphism(type.getNameAsString(), JavaPolymorphismType.IMPLEMENTS));
         }
-
         for (ClassOrInterfaceType type : declaration.getExtendedTypes()) {
             result.add(new Polymorphism(type.getNameAsString(), JavaPolymorphismType.EXTENDS));
         }
