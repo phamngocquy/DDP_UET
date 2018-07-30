@@ -57,5 +57,14 @@ public class Search {
         return nodeList;
     }
 
+    public static List<Node> getAllJavaFieldNode(Node rootNode) {
+        List<Node> nodeList = new ArrayList<>();
+        for (Node iNode : rootNode.getChildren()) {
+            if (iNode.getNodeType().equals(JavaNodeType.JAVA_FIELD_NODE)) {
+                nodeList.add(iNode);
+            }
+        }
+        return nodeList;
+    }
 
 }

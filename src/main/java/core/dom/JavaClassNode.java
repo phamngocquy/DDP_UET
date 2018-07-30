@@ -19,7 +19,7 @@ public class JavaClassNode extends Node {
 
     public JavaClassNode() {
         super.nodeType = JavaNodeType.JAVA_CLASS_NODE;
-        this.polymorphismList = new ArrayList<Polymorphism>();
+        this.polymorphismList = new ArrayList<>();
     }
 
     public EnumSet<Modifier> getModifiers() {

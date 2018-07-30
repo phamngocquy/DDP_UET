@@ -22,7 +22,8 @@ public enum JavaTypeDependencies {
     G, /*class A uses class B in a generic type declaration*/
 
 
-    C, /* class A create object of class B */
+    C, /* class A create object of class B  => B extend A,B implement A*/
 
-    O, /* class A overrides of class B*/
+
+    O, /* class A overrides of class B => */
 }

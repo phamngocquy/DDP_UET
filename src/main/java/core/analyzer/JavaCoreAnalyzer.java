@@ -4,6 +4,7 @@ import core.constant.JavaPolymorphismType;
 import core.constant.JavaTypeDependencies;
 import core.dependency.Dependency;
 import core.dom.JavaClassNode;
+import core.dom.JavaFieldNode;
 import core.dom.JavaMethodNode;
 import core.dom.Node;
 import core.helper.Helper;
@@ -27,7 +28,10 @@ public class JavaCoreAnalyzer {
             JavaClassNode classNode = (JavaClassNode) node;
 
             analyzerClassLevel(classNode, listJavaClassNode);
+            analyzerFieldLevel(classNode, listJavaClassNode);
             analyzerMethodLevel(classNode, listJavaClassNode);
+
+
         }
     }
 
@@ -40,6 +44,7 @@ public class JavaCoreAnalyzer {
         for (Polymorphism polymorphism : classNode.getPolymorphismList()) {
             JavaClassNode iJavaNode = (JavaClassNode) getNodeByName(polymorphism.getModelName(), listJavaClassNode);
             if (iJavaNode != null) {
+
                 if (polymorphism.getPolymorphismType() == JavaPolymorphismType.EXTENDS) {
                     new Dependency().addDependency(classNode, iJavaNode, JavaTypeDependencies.X);
                 } else if (polymorphism.getPolymorphismType() == JavaPolymorphismType.IMPLEMENTS) {
@@ -57,7 +62,7 @@ public class JavaCoreAnalyzer {
         for (Node iNode : methodNodes) {
             JavaMethodNode node = (JavaMethodNode) iNode;
 
-            // return type
+            // return type:
             String returnType = Helper.extracType(node.getReturnType());
             if (!returnType.equals(classNode.getName())) {
                 JavaClassNode iClassNode = (JavaClassNode) getNodeByName(returnType, listJavaClassNode);
@@ -70,14 +75,26 @@ public class JavaCoreAnalyzer {
             // parameter
             List<JavaParameter> parameterList = node.getParameterList();
             for (JavaParameter parameter : parameterList) {
-                JavaClassNode iClassNode = (JavaClassNode) getNodeByName(parameter.getName(), listJavaClassNode);
+                JavaClassNode iClassNode = (JavaClassNode) getNodeByName(parameter.getValueType(), listJavaClassNode);
                 if (iClassNode != null) {
                     new Dependency().addDependency(classNode, iClassNode, JavaTypeDependencies.MI);
+
                 }
             }
         }
     }
 
+    private void analyzerFieldLevel(JavaClassNode classNode, List<Node> listJavaClassNode) {
+        List<Node> javaFieldNodeList = Search.getAllJavaFieldNode(classNode);
+        for (Node iNode : javaFieldNodeList) {
+            JavaFieldNode node = (JavaFieldNode) iNode;
+            JavaClassNode iClassNode = (JavaClassNode) getNodeByName(node.getValueType(), listJavaClassNode);
+            if (iClassNode != null) {
+                new Dependency().addDependency(classNode, iClassNode, JavaTypeDependencies.F);
+            }
+        }
+
+    }
 
     private Node getNodeByName(String name, List<Node> listNode) {
         for (Node node : listNode) {

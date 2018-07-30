@@ -4,19 +4,18 @@ import com.github.javaparser.ast.NodeList;
 import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
 import com.github.javaparser.ast.type.ClassOrInterfaceType;
 import core.analyzer.JavaCoreAnalyzer;
+import core.dependency.Dependency;
+import core.dom.JavaClassNode;
 import core.dom.Node;
 import core.exception.D2pNotFoundException;
-import core.helper.Helper;
 import core.helper.Search;
 import core.loader.LoaderImpl;
-import core.util.JsonHelper;
 import org.junit.Test;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 public class loader {
 
@@ -25,7 +24,7 @@ public class loader {
         String projectPath = "/home/jcia/IdeaProjects/DP-CORE-master/examples/AbstractFactoryExample";
         File folder = new File(projectPath);
         File[] files = folder.listFiles();
-        List<CompilationUnit> unitList = new ArrayList<CompilationUnit>();
+        List<CompilationUnit> unitList = new ArrayList<>();
 
         for (File file : files) {
             if (file.isFile()) {
@@ -52,9 +51,19 @@ public class loader {
     public void testLoadProject() throws D2pNotFoundException {
         LoaderImpl loader = new LoaderImpl();
 //        loader.load("C:\\Users\\Haku\\IdeaProjects\\DDP_UET\\examples\\Bridge Example");
-        loader.load("C:\\Users\\Haku\\IdeaProjects\\jcia-vt\\src\\main\\java\\com\\fit");
+        loader.load("C:\\Users\\Haku\\IdeaProjects\\DDP_UET\\examples\\Combined Patterns Example");
         Node projectNode = loader.getProjectNode();
-        System.out.println(JsonHelper.getInstance().getJson(projectNode));
+        JavaCoreAnalyzer javaCoreAnalyzer = new JavaCoreAnalyzer();
+        javaCoreAnalyzer.doAnalyzer(projectNode);
+        List<Node> nodes = Search.getAllJavaClassNode(projectNode);
+        for (Node iNode : nodes) {
+            JavaClassNode javaClassNode = (JavaClassNode) iNode;
+            List<Dependency> dependencies = javaClassNode.getDependencies();
+            for (Dependency dependency : dependencies) {
+                System.out.println(dependency.toString());
+            }
+        }
+//        System.out.println(JsonHelper.getInstance().getJson(projectNode));
 
 //        JavaCoreAnalyzer javaCoreAnalyzer = new JavaCoreAnalyzer();
 //        javaCoreAnalyzer.doAnalyzer(projectNode);
