@@ -16,6 +16,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 public class loader {
 
@@ -58,11 +59,12 @@ public class loader {
         List<Node> nodes = Search.getAllJavaClassNode(projectNode);
         for (Node iNode : nodes) {
             JavaClassNode javaClassNode = (JavaClassNode) iNode;
-            List<Dependency> dependencies = javaClassNode.getDependencies();
+            Set<Dependency> dependencies = javaClassNode.getDependencies();
             for (Dependency dependency : dependencies) {
                 System.out.println(dependency.toString());
             }
         }
+
 //        System.out.println(JsonHelper.getInstance().getJson(projectNode));
 
 //        JavaCoreAnalyzer javaCoreAnalyzer = new JavaCoreAnalyzer();
@@ -73,5 +75,4 @@ public class loader {
 //        node.setChild(nodeList);
 //        System.out.println(JsonHelper.getInstance().getJson(node));
     }
-
 }

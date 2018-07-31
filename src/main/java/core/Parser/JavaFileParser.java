@@ -49,6 +49,9 @@ public class JavaFileParser implements IParser {
                     else if (n.isGeneric()) classNode.setType(JavaClassType.T);
                     else classNode.setType(JavaClassType.C);
 
+
+
+
                     classNode.setParent(javaFileNode);
                     javaFileNode.addChild(classNode);
 
@@ -66,6 +69,7 @@ public class JavaFileParser implements IParser {
         javaClassNode.accept(new VoidVisitorAdapter<Void>() {
             @Override
             public void visit(MethodDeclaration n, Void arg) {
+
                 JavaMethodNode node = new JavaMethodNode();
                 node.setModifiers(n.getModifiers());
                 node.setName(n.getNameAsString());

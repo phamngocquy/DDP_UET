@@ -5,7 +5,9 @@ import core.dependency.Dependency;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class Node implements Serializable {
 
@@ -17,13 +19,13 @@ public class Node implements Serializable {
     @JsonIgnore
     private Node paren;
     @JsonIgnore
-    private List<Dependency> dependencies;
+    private Set<Dependency> dependencies;
     private List<Node> children;
 
 
     public Node() {
-        this.children = new ArrayList<Node>();
-        this.dependencies = new ArrayList<Dependency>();
+        this.children = new ArrayList<>();
+        this.dependencies = new HashSet<>();
         nodeType = "Node";
     }
 
@@ -32,9 +34,12 @@ public class Node implements Serializable {
         this.absolutePath = absolutePath;
     }
 
-    public void setDependencies(List<Dependency> dependencies) {
-        this.dependencies = dependencies;
+    public Set<Dependency> getDependencies() {
+        return dependencies;
+    }
 
+    public void setDependencies(Set<Dependency> dependencies) {
+        this.dependencies = dependencies;
     }
 
     public void addDependencies(Dependency dependency) {
@@ -46,10 +51,6 @@ public class Node implements Serializable {
         this.children = listChild;
     }
 
-
-    public List<Dependency> getDependencies() {
-        return dependencies;
-    }
 
     public void addChild(Node node) {
         if (node == null) System.err.println("[ADD CHILD]: node is null");

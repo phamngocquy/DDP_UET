@@ -63,24 +63,34 @@ public class JavaCoreAnalyzer {
             JavaMethodNode node = (JavaMethodNode) iNode;
 
             // return type:
-            String returnType = Helper.extracType(node.getReturnType());
-            if (!returnType.equals(classNode.getName())) {
-                JavaClassNode iClassNode = (JavaClassNode) getNodeByName(returnType, listJavaClassNode);
-                if (iClassNode != null) {
-                    new Dependency().addDependency(classNode, iClassNode, JavaTypeDependencies.MR);
-                }
-
+            JavaClassNode iClassNode_ = (JavaClassNode) getNodeByName(node.getReturnType(), listJavaClassNode);
+            analyzerGenericType(classNode, node.getReturnType(), listJavaClassNode);
+            if (iClassNode_ != null) {
+                new Dependency().addDependency(classNode, iClassNode_, JavaTypeDependencies.MR);
             }
 
             // parameter
             List<JavaParameter> parameterList = node.getParameterList();
             for (JavaParameter parameter : parameterList) {
+                analyzerGenericType(classNode, parameter.getValueType(), listJavaClassNode);
                 JavaClassNode iClassNode = (JavaClassNode) getNodeByName(parameter.getValueType(), listJavaClassNode);
                 if (iClassNode != null) {
                     new Dependency().addDependency(classNode, iClassNode, JavaTypeDependencies.MI);
-
                 }
             }
+
+
+            //Local variable
+            String bodyMethod = node.getBody();
+            List<String> sentenceList = Helper.extractValueTypeMethodLevel(bodyMethod);
+            for (String iString : sentenceList) {
+                analyzerGenericType(classNode, iString, listJavaClassNode);
+                JavaClassNode iClassNode = (JavaClassNode) mapNameToObject(iString, classNode.getName(), listJavaClassNode);
+                if (iClassNode != null) {
+                    new Dependency().addDependency(classNode, iClassNode, JavaTypeDependencies.ML);
+                }
+            }
+
         }
     }
 
@@ -88,12 +98,22 @@ public class JavaCoreAnalyzer {
         List<Node> javaFieldNodeList = Search.getAllJavaFieldNode(classNode);
         for (Node iNode : javaFieldNodeList) {
             JavaFieldNode node = (JavaFieldNode) iNode;
+            analyzerGenericType(classNode, node.getValueType(), listJavaClassNode);
             JavaClassNode iClassNode = (JavaClassNode) getNodeByName(node.getValueType(), listJavaClassNode);
             if (iClassNode != null) {
                 new Dependency().addDependency(classNode, iClassNode, JavaTypeDependencies.F);
             }
         }
+    }
 
+    private void analyzerGenericType(JavaClassNode classNode, String typeValue, List<Node> listJavaClassNode) {
+        String type = Helper.extractType(typeValue);
+        if (type != null) {
+            JavaClassNode iClassNode = (JavaClassNode) getNodeByName(type, listJavaClassNode);
+            if (iClassNode != null) {
+                new Dependency().addDependency(classNode, iClassNode, JavaTypeDependencies.G);
+            }
+        }
     }
 
     private Node getNodeByName(String name, List<Node> listNode) {
@@ -105,4 +125,12 @@ public class JavaCoreAnalyzer {
         return null;
     }
 
+    private Node mapNameToObject(String sentence, String parentName, List<Node> listNode) {
+        for (Node node : listNode) {
+            if (sentence.equals(node.getName()) && !node.getName().equals(parentName)) {
+                return node;
+            }
+        }
+        return null;
+    }
 }
