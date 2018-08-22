@@ -17,9 +17,6 @@ import java.util.List;
 
 public class JavaCoreAnalyzer {
 
-    public JavaCoreAnalyzer() {
-    }
-
     public void doAnalyzer(Node projectNode) {
         List<Node> listJavaClassNode = Search.getAllJavaClassNode(projectNode);
 
@@ -37,7 +34,6 @@ public class JavaCoreAnalyzer {
 
     /**
      * X: class A extends class B
-     * I: class A implements class B
      * F: class A has the field type of class B
      */
     private void analyzerClassLevel(JavaClassNode classNode, List<Node> listJavaClassNode) {
@@ -56,6 +52,8 @@ public class JavaCoreAnalyzer {
 
     /**
      * MR: class A has a method with return type of class B
+     * MI: class A has a method that has an input parameter with the type of Class B
+     * ML: class A has a method that defines a local variable with the type of class B
      */
     private void analyzerMethodLevel(JavaClassNode classNode, List<Node> listJavaClassNode) {
         List<Node> methodNodes = Search.getAllJavaMethodNode(classNode, new JavaClassNodeCondition());
@@ -94,6 +92,9 @@ public class JavaCoreAnalyzer {
         }
     }
 
+    /**
+     * I: class A implements class B
+     */
     private void analyzerFieldLevel(JavaClassNode classNode, List<Node> listJavaClassNode) {
         List<Node> javaFieldNodeList = Search.getAllJavaFieldNode(classNode);
         for (Node iNode : javaFieldNodeList) {
@@ -106,6 +107,9 @@ public class JavaCoreAnalyzer {
         }
     }
 
+    /**
+     * G: class A uses class B in a generic type declaration
+     */
     private void analyzerGenericType(JavaClassNode classNode, String typeValue, List<Node> listJavaClassNode) {
         String type = Helper.extractType(typeValue);
         if (type != null) {
@@ -115,6 +119,7 @@ public class JavaCoreAnalyzer {
             }
         }
     }
+
 
     private Node getNodeByName(String name, List<Node> listNode) {
         for (Node node : listNode) {

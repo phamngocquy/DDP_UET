@@ -10,6 +10,9 @@ import core.dom.Node;
 import core.exception.D2pNotFoundException;
 import core.helper.Search;
 import core.loader.LoaderImpl;
+import core.util.JsonHelper;
+import org.jgrapht.alg.isomorphism.IsomorphicGraphMapping;
+import org.jgrapht.alg.isomorphism.VF2SubgraphIsomorphismInspector;
 import org.junit.Test;
 
 import java.io.File;
@@ -49,10 +52,15 @@ public class loader {
     }
 
     @Test
+    public void testVF2Agl() {
+//        VF2SubgraphIsomorphismInspector inspector = new VF2SubgraphIsomorphismInspector()
+    }
+
+    @Test
     public void testLoadProject() throws D2pNotFoundException {
         LoaderImpl loader = new LoaderImpl();
 //        loader.load("C:\\Users\\Haku\\IdeaProjects\\DDP_UET\\examples\\Bridge Example");
-        loader.load("C:\\Users\\Haku\\IdeaProjects\\DDP_UET\\examples\\Combined Patterns Example");
+        loader.load("/home/haku/DDP/ddp/DDP_UET/examples/Combined Patterns Example");
         Node projectNode = loader.getProjectNode();
         JavaCoreAnalyzer javaCoreAnalyzer = new JavaCoreAnalyzer();
         javaCoreAnalyzer.doAnalyzer(projectNode);
@@ -61,11 +69,11 @@ public class loader {
             JavaClassNode javaClassNode = (JavaClassNode) iNode;
             Set<Dependency> dependencies = javaClassNode.getDependencies();
             for (Dependency dependency : dependencies) {
-                System.out.println(dependency.toString());
+//                System.out.println(dependency.toString());
             }
         }
 
-//        System.out.println(JsonHelper.getInstance().getJson(projectNode));
+        System.out.println(JsonHelper.getInstance().getJson(projectNode));
 
 //        JavaCoreAnalyzer javaCoreAnalyzer = new JavaCoreAnalyzer();
 //        javaCoreAnalyzer.doAnalyzer(projectNode);
