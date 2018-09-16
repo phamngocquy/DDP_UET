@@ -1,7 +1,7 @@
 package core.constant;
 
 public enum JavaPolymorphismType {
-    //    extends
+    //extends
     EXTENDS,
     //implements
     IMPLEMENTS
