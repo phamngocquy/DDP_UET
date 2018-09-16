@@ -1,20 +1,3 @@
-/*
- * (C) Copyright 2015-2018, by Fabian Späh and Contributors.
- *
- * JGraphT : a free Java graph-theory library
- *
- * This program and the accompanying materials are dual-licensed under
- * either
- *
- * (a) the terms of the GNU Lesser General Public License version 2.1
- * as published by the Free Software Foundation, or (at your option) any
- * later version.
- *
- * or (per the licensee's choosing)
- *
- * (b) the terms of the Eclipse Public License v1.0 as published by
- * the Eclipse Foundation.
- */
 package core.alg.isomorphism;
 
 import java.util.*;
@@ -24,11 +7,9 @@ import java.util.*;
  *
  * @param <V> the type of the vertices
  * @param <E> the type of the edges
- *
  * @author Fabian Späh
  */
-abstract class VF2State<V, E>
-{
+abstract class VF2State<V, E> {
     public static final int NULL_NODE = -1;
 
     protected static final boolean DEBUG = false;
@@ -36,7 +17,7 @@ abstract class VF2State<V, E>
     protected int[] core1, core2, in1, in2, out1, out2;
 
     protected int coreLen, n1, n2, t1BothLen, t2BothLen, t1InLen, t2InLen, t1OutLen, t2OutLen,
-        addedVertex1, addVertex1, addVertex2;
+            addedVertex1, addVertex1, addVertex2;
 
     protected GraphOrdering<V, E> g1, g2;
 
@@ -44,15 +25,14 @@ abstract class VF2State<V, E>
     protected Comparator<E> edgeComparator;
 
     /**
-     * @param g1 GraphOrdering on first graph
-     * @param g2 GraphOrdering on second graph (possible subgraph)
+     * @param g1               GraphOrdering on first graph
+     * @param g2               GraphOrdering on second graph (possible subgraph)
      * @param vertexComparator comparator for semantic equality of vertices
-     * @param edgeComparator comparator for semantic equality of edges
+     * @param edgeComparator   comparator for semantic equality of edges
      */
     public VF2State(
-        GraphOrdering<V, E> g1, GraphOrdering<V, E> g2, Comparator<V> vertexComparator,
-        Comparator<E> edgeComparator)
-    {
+            GraphOrdering<V, E> g1, GraphOrdering<V, E> g2, Comparator<V> vertexComparator,
+            Comparator<E> edgeComparator) {
         this.g1 = g1;
         this.g2 = g2;
         this.vertexComparator = vertexComparator;
@@ -81,8 +61,7 @@ abstract class VF2State<V, E>
      *
      * @param s
      */
-    public VF2State(VF2State<V, E> s)
-    {
+    public VF2State(VF2State<V, E> s) {
         g1 = s.g1;
         g2 = s.g2;
 
@@ -119,8 +98,7 @@ abstract class VF2State<V, E>
      *
      * @return false, if there are no more pairs left
      */
-    public boolean nextPair()
-    {
+    public boolean nextPair() {
         if (addVertex2 == NULL_NODE) {
             addVertex2 = 0;
         }
@@ -135,16 +113,14 @@ abstract class VF2State<V, E>
         if ((t1BothLen > coreLen) && (t2BothLen > coreLen)) {
             // find minimum for addVertex2 in core2 and t2in/t2out
             while ((addVertex2 < n2) && ((core2[addVertex2] != NULL_NODE) || (out2[addVertex2] == 0)
-                || (in2[addVertex2] == 0)))
-            {
+                    || (in2[addVertex2] == 0))) {
                 addVertex2++;
                 addVertex1 = 0;
             }
 
             // find first/next vertex for addVertex1 in core1 and t1in/t1out
             while ((addVertex1 < n1) && ((core1[addVertex1] != NULL_NODE) || (out1[addVertex1] == 0)
-                || (in1[addVertex1] == 0)))
-            {
+                    || (in1[addVertex1] == 0))) {
                 addVertex1++;
             }
         }
@@ -152,15 +128,13 @@ abstract class VF2State<V, E>
         // check outgoing edges
         else if ((t1OutLen > coreLen) && (t2OutLen > coreLen)) {
             while ((addVertex2 < n2)
-                && ((core2[addVertex2] != NULL_NODE) || (out2[addVertex2] == 0)))
-            {
+                    && ((core2[addVertex2] != NULL_NODE) || (out2[addVertex2] == 0))) {
                 addVertex2++;
                 addVertex1 = 0;
             }
 
             while ((addVertex1 < n1)
-                && ((core1[addVertex1] != NULL_NODE) || (out1[addVertex1] == 0)))
-            {
+                    && ((core1[addVertex1] != NULL_NODE) || (out1[addVertex1] == 0))) {
                 addVertex1++;
             }
         }
@@ -168,15 +142,13 @@ abstract class VF2State<V, E>
         // check incoming edges
         else if ((t1InLen > coreLen) && (t2InLen > coreLen)) {
             while ((addVertex2 < n2)
-                && ((core2[addVertex2] != NULL_NODE) || (in2[addVertex2] == 0)))
-            {
+                    && ((core2[addVertex2] != NULL_NODE) || (in2[addVertex2] == 0))) {
                 addVertex2++;
                 addVertex1 = 0;
             }
 
             while ((addVertex1 < n1)
-                && ((core1[addVertex1] != NULL_NODE) || (in1[addVertex1] == 0)))
-            {
+                    && ((core1[addVertex1] != NULL_NODE) || (in1[addVertex1] == 0))) {
                 addVertex1++;
             }
         }
@@ -195,8 +167,8 @@ abstract class VF2State<V, E>
 
         if ((addVertex1 < n1) && (addVertex2 < n2)) {
             showLog(
-                "nextPair", "next candidate pair: (" + g1.getVertex(addVertex1) + ", "
-                    + g2.getVertex(addVertex2) + ")");
+                    "nextPair", "next candidate pair: (" + g1.getVertex(addVertex1) + ", "
+                            + g2.getVertex(addVertex2) + ")");
             return true;
         }
 
@@ -210,11 +182,10 @@ abstract class VF2State<V, E>
     /**
      * adds the pair to the current matching.
      */
-    public void addPair()
-    {
+    public void addPair() {
         showLog(
-            "addPair",
-            "(" + g1.getVertex(addVertex1) + ", " + g2.getVertex(addVertex2) + ") added");
+                "addPair",
+                "(" + g1.getVertex(addVertex1) + ", " + g2.getVertex(addVertex2) + ") added");
 
         coreLen++;
         addedVertex1 = addVertex1;
@@ -298,28 +269,26 @@ abstract class VF2State<V, E>
     /**
      * @return is the matching already complete?
      */
-    public boolean isGoal()
-    {
+    public boolean isGoal() {
         return coreLen == n2;
     }
 
     /**
      * @return true, if the already matched vertices of graph1 plus the first vertex of nextPair are
-     *         isomorphic to the already matched vertices of graph2 and the second one vertex of
-     *         nextPair.
+     * isomorphic to the already matched vertices of graph2 and the second one vertex of
+     * nextPair.
      */
     public abstract boolean isFeasiblePair();
 
     /**
      * removes the last added pair from the matching
      */
-    public void backtrack()
-    {
+    public void backtrack() {
         int addedVertex2 = core1[addedVertex1];
 
         showLog(
-            "backtrack", "remove (" + g1.getVertex(addedVertex1) + ", " + g2.getVertex(addedVertex2)
-                + ") from the matching");
+                "backtrack", "remove (" + g1.getVertex(addedVertex1) + ", " + g2.getVertex(addedVertex2)
+                        + ") from the matching");
 
         if (in1[addedVertex1] == coreLen) {
             in1[addedVertex1] = 0;
@@ -371,13 +340,11 @@ abstract class VF2State<V, E>
      *
      * @param v1
      * @param v2
-     *
      * @return v1 and v2 are equivalent
      */
-    protected boolean areCompatibleVertexes(int v1, int v2)
-    {
+    protected boolean areCompatibleVertexes(int v1, int v2) {
         return (vertexComparator == null)
-            || (vertexComparator.compare(g1.getVertex(v1), g2.getVertex(v2)) == 0);
+                || (vertexComparator.compare(g1.getVertex(v1), g2.getVertex(v2)) == 0);
     }
 
     /**
@@ -387,22 +354,18 @@ abstract class VF2State<V, E>
      * @param v2
      * @param u1
      * @param u2
-     *
      * @return edges are equivalent
      */
-    protected boolean areCompatibleEdges(int v1, int v2, int u1, int u2)
-    {
+    protected boolean areCompatibleEdges(int v1, int v2, int u1, int u2) {
         return (edgeComparator == null)
-            || (edgeComparator.compare(g1.getEdge(v1, v2), g2.getEdge(u1, u2)) == 0);
+                || (edgeComparator.compare(g1.getEdge(v1, v2), g2.getEdge(u1, u2)) == 0);
     }
 
-    public IsomorphicGraphMapping<V, E> getCurrentMapping()
-    {
+    public IsomorphicGraphMapping<V, E> getCurrentMapping() {
         return new IsomorphicGraphMapping<>(g1, g2, core1, core2);
     }
 
-    public void resetAddVertexes()
-    {
+    public void resetAddVertexes() {
         addVertex1 = addVertex2 = NULL_NODE;
     }
 
@@ -412,8 +375,7 @@ abstract class VF2State<V, E>
      * @param method
      * @param str
      */
-    protected void showLog(String method, String str)
-    {
+    protected void showLog(String method, String str) {
         if (!DEBUG) {
             return;
         }
