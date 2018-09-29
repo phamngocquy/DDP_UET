@@ -13,7 +13,7 @@ import java.util.*;
  * @param <E> the type of the edges
  */
 class VF2SubgraphMappingIterator<V, E> extends VF2MappingIterator<V, E> {
-    public VF2SubgraphMappingIterator(
+    public  VF2SubgraphMappingIterator(
             GraphOrdering<V, E> ordering1, GraphOrdering<V, E> ordering2,
             Comparator<V> vertexComparator, Comparator<E> edgeComparator) {
         super(ordering1, ordering2, vertexComparator, edgeComparator);
@@ -67,5 +67,4 @@ class VF2SubgraphMappingIterator<V, E> extends VF2MappingIterator<V, E> {
         }
     }
 }
-
 // End VF2SubgraphMappingIterator.java
