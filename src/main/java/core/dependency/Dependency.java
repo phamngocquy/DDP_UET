@@ -3,7 +3,7 @@ package core.dependency;
 import core.dom.JavaClassNode;
 import core.dom.Node;
 
-public class Dependency {
+public class Dependency implements IDependency {
     private Node from;
     private Node to;
     private Enum type;
@@ -56,7 +56,9 @@ public class Dependency {
 
     @Override
     public String toString() {
-        return String.format("From: %s | To: %s | Type: %s",
-                from.getName(), to.getName(), String.valueOf(type));
+        JavaClassNode node_from = (JavaClassNode) from;
+        JavaClassNode node_to = (JavaClassNode) to;
+        return String.format("From: %s-%s | To: %s-%s | Type: %s",
+                from.getName(), node_from.getType(), to.getName(), node_to.getType(), String.valueOf(type));
     }
 }
