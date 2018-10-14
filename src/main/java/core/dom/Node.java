@@ -1,7 +1,7 @@
 package core.dom;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import core.dependency.Dependency;
+import core.dependency.UltiDependency;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -19,7 +19,7 @@ public class Node implements Serializable {
     @JsonIgnore
     private Node paren;
     @JsonIgnore
-    private Set<Dependency> dependencies;
+    private Set<UltiDependency> dependencies;
     private List<Node> children;
 
 
@@ -34,16 +34,17 @@ public class Node implements Serializable {
         this.absolutePath = absolutePath;
     }
 
-    public Set<Dependency> getDependencies() {
+    public Set<UltiDependency> getDependencies() {
         return dependencies;
     }
 
-    public void setDependencies(Set<Dependency> dependencies) {
+    public void setDependencies(Set<UltiDependency> dependencies) {
         this.dependencies = dependencies;
     }
 
-    public void addDependencies(Dependency dependency) {
+    public void addDependencies(UltiDependency dependency) {
         if (dependency == null) System.err.println("[ADD DEPENDENCY]: dependency is null");
+
         this.dependencies.add(dependency);
     }
 
@@ -133,4 +134,6 @@ public class Node implements Serializable {
     public void setChildren(List<Node> children) {
         this.children = children;
     }
+
+
 }

@@ -110,6 +110,7 @@ public abstract class VF2AbstractIsomorphismInspector<V, E>
     @Override
     public boolean isomorphismExists() {
         Iterator<GraphMapping<V, E>> iter = getMappings();
+
         return iter.hasNext();
     }
 }

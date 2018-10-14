@@ -2,7 +2,7 @@ package core.analyzer;
 
 import core.constant.JavaPolymorphismType;
 import core.constant.JavaTypeDependencies;
-import core.dependency.Dependency;
+import core.dependency.UltiDependency;
 import core.dom.JavaClassNode;
 import core.dom.JavaFieldNode;
 import core.dom.JavaMethodNode;
@@ -42,9 +42,9 @@ public class JavaCoreAnalyzer implements IAnalyzer {
             if (iJavaNode != null) {
 
                 if (polymorphism.getPolymorphismType() == JavaPolymorphismType.EXTENDS) {
-                    new Dependency().addDependency(classNode, iJavaNode, JavaTypeDependencies.X);
+                    new UltiDependency().addDependency(classNode, iJavaNode, JavaTypeDependencies.X);
                 } else if (polymorphism.getPolymorphismType() == JavaPolymorphismType.IMPLEMENTS) {
-                    new Dependency().addDependency(classNode, iJavaNode, JavaTypeDependencies.I);
+                    new UltiDependency().addDependency(classNode, iJavaNode, JavaTypeDependencies.I);
                 }
             }
         }
@@ -64,7 +64,7 @@ public class JavaCoreAnalyzer implements IAnalyzer {
             JavaClassNode iClassNode_ = (JavaClassNode) getNodeByName(node.getReturnType(), listJavaClassNode);
             analyzerGenericType(classNode, node.getReturnType(), listJavaClassNode);
             if (iClassNode_ != null) {
-                new Dependency().addDependency(classNode, iClassNode_, JavaTypeDependencies.MR);
+                new UltiDependency().addDependency(classNode, iClassNode_, JavaTypeDependencies.MR);
             }
 
             // parameter
@@ -73,7 +73,7 @@ public class JavaCoreAnalyzer implements IAnalyzer {
                 analyzerGenericType(classNode, parameter.getValueType(), listJavaClassNode);
                 JavaClassNode iClassNode = (JavaClassNode) getNodeByName(parameter.getValueType(), listJavaClassNode);
                 if (iClassNode != null) {
-                    new Dependency().addDependency(classNode, iClassNode, JavaTypeDependencies.MI);
+                    new UltiDependency().addDependency(classNode, iClassNode, JavaTypeDependencies.MI);
                 }
             }
 
@@ -85,7 +85,7 @@ public class JavaCoreAnalyzer implements IAnalyzer {
                 analyzerGenericType(classNode, iString, listJavaClassNode);
                 JavaClassNode iClassNode = (JavaClassNode) mapNameToObject(iString, classNode.getName(), listJavaClassNode);
                 if (iClassNode != null) {
-                    new Dependency().addDependency(classNode, iClassNode, JavaTypeDependencies.ML);
+                    new UltiDependency().addDependency(classNode, iClassNode, JavaTypeDependencies.ML);
                 }
             }
 
@@ -102,7 +102,7 @@ public class JavaCoreAnalyzer implements IAnalyzer {
             analyzerGenericType(classNode, node.getValueType(), listJavaClassNode);
             JavaClassNode iClassNode = (JavaClassNode) getNodeByName(node.getValueType(), listJavaClassNode);
             if (iClassNode != null) {
-                new Dependency().addDependency(classNode, iClassNode, JavaTypeDependencies.F);
+                new UltiDependency().addDependency(classNode, iClassNode, JavaTypeDependencies.F);
             }
         }
     }
@@ -115,7 +115,7 @@ public class JavaCoreAnalyzer implements IAnalyzer {
         if (type != null) {
             JavaClassNode iClassNode = (JavaClassNode) getNodeByName(type, listJavaClassNode);
             if (iClassNode != null) {
-                new Dependency().addDependency(classNode, iClassNode, JavaTypeDependencies.G);
+                new UltiDependency().addDependency(classNode, iClassNode, JavaTypeDependencies.G);
             }
         }
     }

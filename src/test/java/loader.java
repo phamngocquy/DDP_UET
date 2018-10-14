@@ -6,14 +6,12 @@ import com.github.javaparser.ast.type.ClassOrInterfaceType;
 import core.alg.isomorphism.VF2SubgraphIsomorphismInspector;
 import core.alg.isomorphism.edge.DDPEdge;
 import core.analyzer.JavaCoreAnalyzer;
-import core.constant.JavaTypeDependencies;
-import core.dependency.Dependency;
+import core.dependency.UltiDependency;
 import core.dom.JavaClassNode;
 import core.dom.Node;
 import core.exception.D2pNotFoundException;
 import core.helper.Search;
 import core.loader.LoaderImpl;
-import core.util.JsonHelper;
 import org.jgrapht.Graph;
 import org.jgrapht.graph.DefaultDirectedGraph;
 import org.jgrapht.graph.DefaultEdge;
@@ -56,87 +54,88 @@ public class loader {
     @Test
     public void testLoadProject() throws D2pNotFoundException {
 
-        Graph<Node, DefaultEdge> graphOne =
-                new DefaultDirectedGraph<>(DefaultEdge.class);
-
-        LoaderImpl loader = new LoaderImpl();
-//        loader.load("/home/haku/DDP/ddp/DDP_UET/examples/Visitor Example");
-        loader.load("/home/haku/DDP/ddp/DDP_UET/examples/Abstract Factory Example");
-        Node projectNode = loader.getProjectNode();
-        JavaCoreAnalyzer javaCoreAnalyzer = new JavaCoreAnalyzer();
-        javaCoreAnalyzer.doAnalyzer(projectNode);
-        List<Node> nodes = Search.getAllJavaClassNode(projectNode);
-        Set<Dependency> dependencies = new HashSet<>();
-        for (Node iNode : nodes) {
-            JavaClassNode javaClassNode = (JavaClassNode) iNode;
-            dependencies.addAll(javaClassNode.getDependencies());
-        }
-
-
-        for (Dependency dependency : dependencies) {
-            System.out.println(dependency.toString());
-        }
-
-        Set<Node> nodeSet = new HashSet<>();
-        for (Dependency dependency : dependencies) {
-            nodeSet.add(dependency.getFrom());
-            nodeSet.add(dependency.getTo());
-        }
-        for (Node node : nodeSet) {
-            graphOne.addVertex(node);
-//            System.out.println("Vertex Caller: " + node.getName());
-        }
-        for (Dependency dependency : dependencies) {
-            graphOne.addEdge(dependency.getFrom(), dependency.getTo());
-//            System.out.println("add EDGE: " + dependency.getFrom().getName() + " -- " + dependency.getTo().getName());
-
-        }
-
-
-//        System.out.println(JsonHelper.getInstance().getJson(projectNode));
+//        Graph<Node, DefaultEdge> graphOne =
+//                new DefaultDirectedGraph<>(DefaultEdge.class);
+//
+//        LoaderImpl loader = new LoaderImpl();
+//        loader.load("/home/quypn/IdeaProjects/DDP_UET/examples/Observer Example");
+////        loader.load("");
+//        Node projectNode = loader.getProjectNode();
 //        JavaCoreAnalyzer javaCoreAnalyzer = new JavaCoreAnalyzer();
 //        javaCoreAnalyzer.doAnalyzer(projectNode);
-//        List<Node> nodeList = Search.getAllJavaClassNode(loader.getProjectNode());
-//        Node node = new Node();
-//        node.setChild(nodeList);
-//        System.out.println(JsonHelper.getInstance().getJson(node));
+//        List<Node> nodes = Search.getAllJavaClassNode(projectNode);
+//
+//
+//        Set<UltiDependency> dependencies = new HashSet<>();
+//        for (Node iNode : nodes) {
+//            JavaClassNode javaClassNode = (JavaClassNode) iNode;
+//            dependencies.addAll(javaClassNode.getDependencies());
+//        }
+//
+//        for (UltiDependency dependency : dependencies){
+//            System.out.println(dependency.toString());
+//        }
+//
+//        Set<Node> nodeSet = new HashSet<>();
+//        for (Dependency dependency : dependencies) {
+//            nodeSet.add(dependency.getFrom());
+//            nodeSet.add(dependency.getTo());
+//        }
+//        for (Node node : nodeSet) {
+//            graphOne.addVertex(node);
+//        }
+//        for (Dependency dependency : dependencies) {
+//            graphOne.addEdge(dependency.getFrom(), dependency.getTo());
+//
+//        }
+
 
         Graph<Node, DefaultEdge> graphTwo = new DefaultDirectedGraph<>(DefaultEdge.class);
 
         LoaderImpl loader_ = new LoaderImpl();
-        loader_.load("/home/haku/DDP_UET/DDP_DATA_TEST/java-design-patterns-master/java-design-patterns-master/visitor/src/main/java/com/iluwatar/visitor");
+        loader_.load("/home/quypn/DDP_UET/DDP_DATA_TEST/java-design-patterns-master/java-design-patterns-master/observer/src/main/java/com/iluwatar/observer");
         Node projectNode_ = loader_.getProjectNode();
         JavaCoreAnalyzer javaCoreAnalyzer_ = new JavaCoreAnalyzer();
         javaCoreAnalyzer_.doAnalyzer(projectNode_);
 
-//        System.out.println(JsonHelper.getInstance().getJson(projectNode_));
 
         List<Node> nodes_ = Search.getAllJavaClassNode(projectNode_);
-        Set<Dependency> dependencies_ = new HashSet<>();
+        Set<UltiDependency> dependencies_ = new HashSet<>();
         for (Node iNode : nodes_) {
+            System.out.println(iNode.getName());
             JavaClassNode javaClassNode = (JavaClassNode) iNode;
             dependencies_.addAll(javaClassNode.getDependencies());
         }
-
-        Set<Node> nodeSet_ = new HashSet<>();
-        for (Dependency dependency : dependencies_) {
-            nodeSet_.add(dependency.getFrom());
-            nodeSet_.add(dependency.getTo());
+        System.out.println("//==========================================//");
+        for (UltiDependency dependency : dependencies_){
+            System.out.println(dependency.toString());
         }
 
-        System.out.println("//====================//");
-        for (Node node : nodeSet_) {
-            graphTwo.addVertex(node);
-//            System.out.println("Vertex Caller: " + node.getName());
-        }
-
-        for (Dependency dependency : dependencies_) {
-            graphTwo.addEdge(dependency.getFrom(), dependency.getTo());
-//            System.out.println("add EDGE: " + dependency.getFrom().getName() + " -- " + dependency.getTo().getName());
-        }
-
-        VF2SubgraphIsomorphismInspector inspector = new VF2SubgraphIsomorphismInspector(graphTwo, graphOne);
-        System.out.println(inspector.isomorphismExists());
+//        System.out.println(nodes_.size());
+//        Set<Dependency> dependencies_ = new HashSet<>();
+//        for (Node iNode : nodes_) {
+//            JavaClassNode javaClassNode = (JavaClassNode) iNode;
+//            dependencies_.addAll(javaClassNode.getDependencies());
+//        }
+//
+//        Set<Node> nodeSet_ = new HashSet<>();
+//        for (Dependency dependency : dependencies_) {
+//            nodeSet_.add(dependency.getFrom());
+//            nodeSet_.add(dependency.getTo());
+//        }
+//
+//        System.out.println("//====================//");
+//        for (Node node : nodeSet_) {
+//            graphTwo.addVertex(node);
+//        }
+//        System.out.println(dependencies_.size());
+//        for (Dependency dependency : dependencies_) {
+//            System.out.println(dependency.toString());
+//            graphTwo.addEdge(dependency.getFrom(), dependency.getTo());
+//        }
+//
+//        VF2SubgraphIsomorphismInspector inspector = new VF2SubgraphIsomorphismInspector(graphTwo, graphOne);
+//            System.out.println(inspector.isomorphismExists());
     }
 
     @Test
@@ -159,6 +158,8 @@ public class loader {
 
         VF2SubgraphIsomorphismInspector inspector = new VF2SubgraphIsomorphismInspector(defaultEdgeGraph2, directedGraph);
         System.out.println(inspector.isomorphismExists());
+        System.out.println(inspector.toString());
+
     }
 
 
@@ -169,5 +170,10 @@ public class loader {
 
         Comparator<DDPEdge> edgeComparator = Comparator.comparingInt(o -> o.getDependencies().size());
         System.out.println(edgeComparator.compare(edge, edge_));
+    }
+
+    @Test
+    public void test() {
+        System.out.println("a");
     }
 }
