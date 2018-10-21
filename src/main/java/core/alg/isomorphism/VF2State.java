@@ -1,5 +1,8 @@
 package core.alg.isomorphism;
 
+import core.alg.isomorphism.edge.DDPEdge;
+import core.dom.JavaClassNode;
+
 import java.util.*;
 
 /**
@@ -343,6 +346,8 @@ abstract class VF2State<V, E> {
      * @return v1 and v2 are equivalent
      */
     protected boolean areCompatibleVertexes(int v1, int v2) {
+        if (!areCompareTypeVertex(g1.getVertex(v1), g2.getVertex(v2))) return false;
+
         return (vertexComparator == null)
                 || (vertexComparator.compare(g1.getVertex(v1), g2.getVertex(v2)) == 0);
     }
@@ -357,6 +362,7 @@ abstract class VF2State<V, E> {
      * @return edges are equivalent
      */
     protected boolean areCompatibleEdges(int v1, int v2, int u1, int u2) {
+        if (!areCompareDepedencyOfEdge(g1.getEdge(v1, v2), g2.getEdge(u1, u2))) return false;
         return (edgeComparator == null)
                 || (edgeComparator.compare(g1.getEdge(v1, v2), g2.getEdge(u1, u2)) == 0);
     }
@@ -384,6 +390,19 @@ abstract class VF2State<V, E> {
         Arrays.fill(indent, ' ');
         System.out.println((new String(indent)) + method + "> " + str);
     }
+
+    private boolean areCompareDepedencyOfEdge(E e1, E e2) {
+        DDPEdge edge1 = (DDPEdge) e1;
+        DDPEdge edge2 = (DDPEdge) e2;
+        return edge1.getDependencies().equals(edge2.getDependencies());
+    }
+
+    private boolean areCompareTypeVertex(V v1, V v2) {
+        JavaClassNode node1 = (JavaClassNode) v1;
+        JavaClassNode node2 = (JavaClassNode) v2;
+        return node1.getType().equals(node2.getType());
+    }
+
 }
 
 // End VF2State.java

@@ -1,8 +1,9 @@
 package core.alg.isomorphism;
 
 
+import com.github.javaparser.utils.Log;
+import core.dom.JavaClassNode;
 import org.jgrapht.GraphMapping;
-import sun.rmi.runtime.Log;
 
 import java.util.*;
 
@@ -45,10 +46,12 @@ abstract class VF2MappingIterator<V, E>
         /*
             get domain isomorphic in parent graph
          */
-        System.out.println(rel.getMappingDomain());
+        Set<JavaClassNode> nodes = (Set<JavaClassNode>) rel.getMappingDomain();
+        for (JavaClassNode node : nodes) {
+            System.out.print(node.getName() + " ");
+        }
         if (rel != null) {
             hadOneMapping = true;
-            System.out.println("HadOneMapping: True");
         }
         return rel;
     }

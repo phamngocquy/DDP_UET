@@ -1,5 +1,6 @@
 package core.dependency;
 
+import core.constant.JavaTypeDependencies;
 import core.dom.JavaClassNode;
 import core.dom.Node;
 
@@ -9,7 +10,7 @@ import java.util.Set;
 public class UltiDependency implements IDependency {
     private Node from;
     private Node to;
-    private Set<Enum> types;
+    private Set<JavaTypeDependencies> types;
 
 
     public UltiDependency() {
@@ -17,7 +18,7 @@ public class UltiDependency implements IDependency {
     }
 
     @Override
-    public void addDependency(Node caller, Node callee, Enum type) {
+    public void addDependency(Node caller, Node callee, JavaTypeDependencies type) {
 
         // check dependency exists and Type to set
         for (UltiDependency dependency : caller.getDependencies()) {
@@ -65,15 +66,15 @@ public class UltiDependency implements IDependency {
         this.to = to;
     }
 
-    public Set<Enum> getType() {
+    public Set<JavaTypeDependencies> getType() {
         return types;
     }
 
-    public void addType(Enum type) {
+    public void addType(JavaTypeDependencies type) {
         this.types.add(type);
     }
 
-    public void setType(Set<Enum> type) {
+    public void setType(Set<JavaTypeDependencies> type) {
         this.types = type;
     }
 }

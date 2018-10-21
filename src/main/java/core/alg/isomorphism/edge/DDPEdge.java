@@ -5,22 +5,23 @@ import org.jgrapht.graph.DefaultEdge;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 public class DDPEdge extends DefaultEdge {
 
 
-    private List<JavaTypeDependencies> dependencies;
+    private Set<JavaTypeDependencies> dependencies;
 
-    public DDPEdge() {
+    public DDPEdge(Set<JavaTypeDependencies> dependenciesSet) {
         super();
-        dependencies = new ArrayList<>();
+        dependencies =  dependenciesSet;
     }
 
-    public List<JavaTypeDependencies> getDependencies() {
+    public Set<JavaTypeDependencies> getDependencies() {
         return dependencies;
     }
 
-    public void setDependencies(List<JavaTypeDependencies> dependencies) {
+    public void setDependencies(Set<JavaTypeDependencies> dependencies) {
         this.dependencies = dependencies;
     }
 
@@ -41,5 +42,10 @@ public class DDPEdge extends DefaultEdge {
     @Override
     public String toString() {
         return super.toString();
+    }
+    public void getDepedencyStr()
+    {
+        for (JavaTypeDependencies javaTypeDependencies : dependencies)
+            System.out.println(javaTypeDependencies);
     }
 }

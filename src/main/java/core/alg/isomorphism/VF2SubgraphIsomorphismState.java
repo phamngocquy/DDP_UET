@@ -1,5 +1,7 @@
 package core.alg.isomorphism;
 
+import core.alg.isomorphism.edge.DDPEdge;
+
 import java.util.*;
 
 class VF2SubgraphIsomorphismState<V, E>
@@ -43,6 +45,7 @@ class VF2SubgraphIsomorphismState<V, E>
                     showLog(
                             "isFeasiblePair", abortmsg + ": edge from " + g2.getVertex(addVertex2)
                                     + " to " + g2.getVertex(other2) + " is missing in the 2nd graph");
+
                     return false;
                 }
             } else {
