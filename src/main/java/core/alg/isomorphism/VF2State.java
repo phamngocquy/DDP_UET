@@ -362,7 +362,7 @@ abstract class VF2State<V, E> {
      * @return edges are equivalent
      */
     protected boolean areCompatibleEdges(int v1, int v2, int u1, int u2) {
-        if (!areCompareDepedencyOfEdge(g1.getEdge(v1, v2), g2.getEdge(u1, u2))) return false;
+        if (!areCompareDependencyOfEdge(g1.getEdge(v1, v2), g2.getEdge(u1, u2))) return false;
         return (edgeComparator == null)
                 || (edgeComparator.compare(g1.getEdge(v1, v2), g2.getEdge(u1, u2)) == 0);
     }
@@ -391,7 +391,7 @@ abstract class VF2State<V, E> {
         System.out.println((new String(indent)) + method + "> " + str);
     }
 
-    private boolean areCompareDepedencyOfEdge(E e1, E e2) {
+    private boolean areCompareDependencyOfEdge(E e1, E e2) {
         DDPEdge edge1 = (DDPEdge) e1;
         DDPEdge edge2 = (DDPEdge) e2;
         return edge1.getDependencies().equals(edge2.getDependencies());
