@@ -25,7 +25,6 @@ import java.util.List;
 import java.util.Set;
 
 public class loader {
-
     @Test
     public void loadListJavFile() throws FileNotFoundException {
         String projectPath = "/home/jcia/IdeaProjects/DP-CORE-master/examples/AbstractFactoryExample";
@@ -61,7 +60,7 @@ public class loader {
                 new DefaultDirectedGraph<>(DDPEdge.class);
 
         LoaderImpl loader = new LoaderImpl();
-        loader.load("/home/quypn/IdeaProjects/DDP_UET/examples/Visitor Example");
+        loader.load("/home/quypn/IdeaProjects/DDP_UET/examples/custom_abs_factory/abs_factory_example");
 //        loader.load("");
         Node projectNode = loader.getProjectNode();
         JavaCoreAnalyzer javaCoreAnalyzer = new JavaCoreAnalyzer();
@@ -96,7 +95,7 @@ public class loader {
         Graph<Node, DDPEdge> graphTwo = new DefaultDirectedGraph<>(DDPEdge.class);
 
         LoaderImpl loader_ = new LoaderImpl();
-        loader_.load("/home/quypn/Visitor Example");
+        loader_.load("/home/quypn/IdeaProjects/DDP_UET/examples/Abstract Factory Example");
         Node projectNode_ = loader_.getProjectNode();
         JavaCoreAnalyzer javaCoreAnalyzer_ = new JavaCoreAnalyzer();
         javaCoreAnalyzer_.doAnalyzer(projectNode_);
@@ -125,7 +124,7 @@ public class loader {
             graphTwo.addEdge(dependency.getFrom(), dependency.getTo(), new DDPEdge(dependency.getType()));
 
         }
-        VF2SubgraphIsomorphismInspector inspector = new VF2SubgraphIsomorphismInspector(graphTwo, graphOne);
+        VF2SubgraphIsomorphismInspector inspector = new VF2SubgraphIsomorphismInspector(graphOne, graphTwo);
         System.out.println(inspector.isomorphismExists());
     }
 
