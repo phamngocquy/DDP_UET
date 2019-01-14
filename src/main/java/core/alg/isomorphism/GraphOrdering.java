@@ -5,8 +5,6 @@ import org.jgrapht.Graph;
 import java.util.*;
 
 /**
- * This class represents the order on the graph vertices. There are also some helper-functions for
- * receiving outgoing/incoming edges, etc.
  *
  * @param <V> the type of the vertices
  * @param <E> the type of the edges

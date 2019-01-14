@@ -23,6 +23,11 @@ public class LoaderImpl implements ILoader {
         this.javaFileParser = new JavaFileParser();
     }
 
+    /**
+     *
+     * @param projectPath
+     * @throws D2pNotFoundException
+     */
     public void load(String projectPath) throws D2pNotFoundException {
         String absolutePath = FileHelper.getAbsolutePath(projectPath);
         /*create root node*/
@@ -32,6 +37,11 @@ public class LoaderImpl implements ILoader {
         buildPrimitiveTree();
     }
 
+    /**
+     *
+     * @param projectPath
+     * @throws D2pNotFoundException
+     */
     private void initProjectNode(String projectPath) throws D2pNotFoundException {
         File file = new File(projectPath);
         if (!file.exists()) {
@@ -50,10 +60,15 @@ public class LoaderImpl implements ILoader {
         buildSubTree(projectNode);
     }
 
+    /**
+     *
+     * @param parentNode
+     */
     private void buildSubTree(Node parentNode) {
         Node node = null;
-        ArrayList<String> absolutePathChilds = FileHelper.getAbsolutePathChilds(parentNode.getAbsolutePath());
-        for (String absolutePath : absolutePathChilds) {
+        ArrayList<String> absolutePathChild =
+                FileHelper.getAbsolutePathChild(parentNode.getAbsolutePath());
+        for (String absolutePath : absolutePathChild) {
             File file = new File(absolutePath);
             if (file.exists()) {
                 if (file.isDirectory()) {

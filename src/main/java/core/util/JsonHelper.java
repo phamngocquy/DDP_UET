@@ -21,7 +21,8 @@ public class JsonHelper {
 
     public String getJson(Node o) {
         try {
-            return objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(o);
+            return objectMapper.writerWithDefaultPrettyPrinter().
+                    writeValueAsString(o);
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }

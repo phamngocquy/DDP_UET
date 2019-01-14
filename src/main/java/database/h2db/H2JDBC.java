@@ -1,5 +1,6 @@
 package database.h2db;
 
+import config.ConfigProperties;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
@@ -45,7 +46,7 @@ public class H2JDBC {
     public Connection getConnection() {
         if (con == null) {
             try {
-                con = DriverManager.getConnection("jdbc:h2:file:~/test", "sa", "");
+                con = DriverManager.getConnection(ConfigProperties.DB_CONNECTION, ConfigProperties.DB_USER, ConfigProperties.DB_PASSWORD);
             } catch (SQLException e) {
                 Logger.getLogger(H2JDBC.class.getName()).log(Level.SEVERE, null, e);
             }

@@ -25,11 +25,16 @@ public class JavaFileParser implements IParser {
 
     private JavaFileNode javaFileNode;
 
+    /**
+     *
+     * @param rootNode
+     */
     public void parse(Node rootNode) {
         try {
             this.javaFileNode = (JavaFileNode) rootNode;
 
-            CompilationUnit compilationUnit = JavaParser.parse(new File(rootNode.getAbsolutePath()));
+            CompilationUnit compilationUnit =
+                    JavaParser.parse(new File(rootNode.getAbsolutePath()));
             compilationUnit.accept(new VoidVisitorAdapter<Void>() {
                 @Override
                 public void visit(ClassOrInterfaceDeclaration n, Void arg) {
@@ -37,8 +42,8 @@ public class JavaFileParser implements IParser {
                     JavaClassNode classNode = new JavaClassNode();
                     classNode.setModifiers(n.getModifiers());
                     classNode.setName(n.getNameAsString());
-                    classNode.setAbsolutePath(FileHelper.getAbsolutePath(javaFileNode.getAbsolutePath(),
-                            n.getNameAsString()));
+                    classNode.setAbsolutePath(FileHelper.getAbsolutePath(
+                            javaFileNode.getAbsolutePath(), n.getNameAsString()));
                     classNode.setAbstract(n.isAbstract());
                     classNode.setInterface(n.isInterface());
                     classNode.setPolymorphismList(getPolymorphismProperties(n));
@@ -65,7 +70,13 @@ public class JavaFileParser implements IParser {
         }
     }
 
-    private void javaClassParse(ClassOrInterfaceDeclaration javaClassNode, final JavaClassNode classNode) {
+    /**
+     *
+     * @param javaClassNode
+     * @param classNode
+     */
+    private void javaClassParse(ClassOrInterfaceDeclaration javaClassNode,
+                                final JavaClassNode classNode) {
         javaClassNode.accept(new VoidVisitorAdapter<Void>() {
             @Override
             public void visit(MethodDeclaration n, Void arg) {
@@ -73,7 +84,8 @@ public class JavaFileParser implements IParser {
                 JavaMethodNode node = new JavaMethodNode();
                 node.setModifiers(n.getModifiers());
                 node.setName(n.getNameAsString());
-                node.setAbsolutePath(FileHelper.getAbsolutePath(classNode.getAbsolutePath(), node.getName()));
+                node.setAbsolutePath(FileHelper.getAbsolutePath(
+                        classNode.getAbsolutePath(), node.getName()));
                 node.setReturnType(n.getType().toString());
                 node.setBody(n.getBody().toString());
                 parseParameter(node, n);
@@ -88,7 +100,8 @@ public class JavaFileParser implements IParser {
                 node.setModifiers(n.getModifiers());
                 node.setName(n.getVariable(0).toString());
                 node.setValue_type(n.getCommonType().toString());
-                node.setAbsolutePath(FileHelper.getAbsolutePath(classNode.getAbsolutePath(), node.getName()));
+                node.setAbsolutePath(FileHelper.getAbsolutePath(
+                        classNode.getAbsolutePath(), node.getName()));
                 classNode.addChild(node);
                 node.setParent(classNode);
                 super.visit(n, arg);
@@ -96,6 +109,11 @@ public class JavaFileParser implements IParser {
         }, null);
     }
 
+    /**
+     *
+     * @param javaMethodNode
+     * @param n
+     */
     private void parseParameter(JavaMethodNode javaMethodNode, MethodDeclaration n) {
         List<JavaParameter> parameters = new ArrayList<>();
         for (Parameter p : n.getParameters()) {
@@ -104,6 +122,11 @@ public class JavaFileParser implements IParser {
         javaMethodNode.setParameterList(parameters);
     }
 
+    /**
+     *
+     * @param declaration
+     * @return
+     */
     private static List<Polymorphism> getPolymorphismProperties(ClassOrInterfaceDeclaration declaration) {
         List<Polymorphism> result = new ArrayList<>();
         for (ClassOrInterfaceType type : declaration.getImplementedTypes()) {

@@ -6,7 +6,6 @@ import core.exception.D2pNotFoundException;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collections;
 
 public class FileHelper {
     public static final String JAVA_EXTENSION = ".java";
@@ -26,7 +25,7 @@ public class FileHelper {
      * @param parentPath absolute path
      * @return list absolute path of file or folder child
      */
-    public static ArrayList<String> getAbsolutePathChilds(String parentPath) {
+    public static ArrayList<String> getAbsolutePathChild(String parentPath) {
         ArrayList<String> childAbsolutePaths = new ArrayList<String>();
         File file = new File(parentPath);
         String[] names = file.list();
